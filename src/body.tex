@@ -1,0 +1,65 @@
+\chapter{Contesto e obbiettivi del progetto}
+Qualcosa tipo la relazione di tirocinio sul perché sto facendo questa cosa. (guarda robe commentate).
+%Il tirocinio viene svolto in forma remota per conto dell'Istituto Nazionale di Geofisica e Vulcanologia. Il tirocinio consta di un progetto di sviluppo riguardante l'infrastruttura a supporto della ricerca presso tale istituto.\\
+%L'obbiettivo del progetto è quello di implementare un cluster HPC basato su Slurm funzionante sulla piattaforma OpenStack. Questo con l'obbiettivo di verificare la fattibilità dell'utilizzo di un applicativo simile in questo contesto e per automatizzare il processo di creazione dei cluster e quindi velocizzare il lavoro dei ricercatori. \\
+%Il cluster viene dispiegato in un Virtual Data Center, uno spazio cloud virtuale pensato per evitare che gli utenti che lo utilizzano (come i Data Scientists) si debbano preoccupare della gestione dell'infrastruttura, fornendo uno spazio in cui hanno libertà di fare operazioni complesse. \\
+%In un VDC si possono creare macchine virtuali ed altri componenti delegando agli amministratori di rete il supporto e la gestione dell'infrastruttura. 
+%Il VDC permette l'accesso alle macchine via SSH ed attraverso l'interfaccia Web di OpenStack, denominata \textit{Horizon}. \\
+%La possibilità di poter automatizzare il provisioning dei cluster HPC solleverebbe i ricercatori dal peso di dover conoscere e controllare l'ambiente in cui operano inoltre gli eventuali problemi potrebbero essere risolti in maniera centralizzata senza avere configurazioni sparse nella rete. \\
+%
+%In questo documenti si affronterà l'analisi dei componenti necessari e delle possibili alternative disponibili, l'architettura ed il funzionamento pratico del cluster. 
+%
+\chapter{Architettura e componenti necessari}
+\section{Cloud-Init}
+Una tecnologia di Infrastructure-as-Code con cui le istanze vengono configurate automaticamente al loro avvio installando pacchetti, scrivendo file di configurazione e inviando comandi alla shell. \\
+Questo componente è già nativo in OpenStack e quindi rende lo sviluppo veloce soprattutto in questo momento che si è nelle fasi iniziali del progetto. Potrebbe non essere la soluzione giusta in un contesto di produzione infatti vi sono applicativi più completi per l'automazione del deployment di cluster HPC come:
+\begin{itemize}
+    \item \textbf{Heat}: il servizio integrato della suite OpenStack per orchestrare tramite template, che in questo caso non era disponibile.
+    \item \textbf{Warewulf}: una piattaforma creata appositamente per il automatizzare il provisioning di cluster HPC dotato di gestione delle immagini e creazione automatica dei nodi. Molto più fluido rispetto a Heat ma non adatto per questo stato del progetto anche perché richiede una configurazione più importante delle macchine virtuali (N.B.: WareWulf esegue il provisioning mentre Heat, Ansible e Cloud-Init eseguono la configurazione della macchina quindi W.W. andrebbe utilizzato assieme a qualche altro tool di configurazione).
+    \item \textbf{Ansible}: un'altra valida alternativa a Cloud-Init che permette molta più libertà ed anche la possibilità di un mantenimento continuo delle istanze. A sua volta è più complicato da configurare e richiede un ulteriore nodo master per inviare i moduli ai nodi che controlla.
+\end{itemize}
+%
+\section{Kubernetes}
+Kubernetes è un sistema open-source per il deployment e lo scaling di applicazioni containerizzate. E' un sistema PaaS (Platform-as-a-Service) e lavorando a livello dei container fornisce diversi tool come scaling e load balancing ma lascia agli utenti l'integrazione di logging e monitoring. Ciò apre ad una particolare flessibilità e possibilità di integrazione con parecchie piattaforme cloud, infatti Kubernetes è fornito come servizio \textit{managed} dai principali fornitori cloud tra cui: Azure Kubernetes Service (AKS), Google Kubernetes Engine (GKE), Oracle Kubernetes Engine (OKE).
+\subsubsection{Principali componenti di Kubernetes}
+Le applicazioni containerizzate sono dispiegate su componenti detti Pods, questi ultimi sono caricati su uno o più nodi del cluster che possono essere macchine fisiche o virtuali. In ogni nodo sono installati tutti i componenti necessari per controllare i pods e tutti i nodi sono controllati dal nodo master che contiene il layer di gestione del ciclo di vita dei pods.\\
+I principali componenti sono quindi:
+\begin{itemize}
+    \item {
+        Nodi: macchine virtuali o fisiche dotate di tutti i componenti per la gestione dei containers. Ogni nodo contiene una container runtime (come CRI o \texttt{containerd}), \texttt{kubelet} (l'agente che gestisce localmente i Pods) ed opzionalmente \texttt{kube-proxy} che implementa una parte del networking.
+    }
+    \item {
+        Pods: la più piccola unità che si può dispiegare su Kubernetes. Ciascun pod contiene uno o più container, tipicamente uno oppure due se strettamente legati ed operano sugli stessi files (sidecar).
+    }
+    \item {
+        Services: in Kubernetes le applicazioni sono distribuite ma forniscono tutte lo stesso \textit{servizio} all'utente o al cluster ed un Service è un modo per unire sotto lo stesso endpoint tutte le applicazioni.\\
+        Questo componente permette di gestire la natura effimera dei Pods che possono essere creati e distrutti a runtime quindi l'utente farebbe particolare fatica a tenere traccia dei loro indirizzi.\\
+        Fa anche da Load Balancer per distribuire il traffico tra i vari Pods.
+    }
+    \item {
+        Ingress: è un servizio di rete che permette di smistare il traffico in base alle regole indicate dall'utente. Questo permette di erogare diversi servizi provenienti da diversi gruppi di Pods dallo stesso endpoint.\\
+        E' componente molto potente in quanto può fare da Load Balancer e come terminazione SSL/TLS; queste caratteristiche riducono la necessità di LBs nel cluster e permette comunicazioni più snelle in quanto il protocollo di sicurezza viene terminato prima dell'ingresso dei pacchetti nel cluster.\\
+        E' sempre necessario un Ingress Controller (come AKS, NginX o altri) per applicare le regole di routing.
+    }
+    \item {
+        Autoscaling: HPA ed Autoscalers sono componenti che permettono lo scaling orizzontale (aumentando il numero di Pods) o verticale aumentando il numero di Pods al fine di mantenere entro una certa soglia l'utilizzo delle risorse.\\
+        Kubernetes è in grado di comunicare, attraverso plugin come Autoscaler o Karpenter, con i Cloud Providers al fine di eliminare o aggiungere risorse al cluster in base alle necessità ed alle limitazioni. Per esempio potrebbero essere necessari più nodi per i Pod in scheduling oppure rimuovere nodi per abbassare i costi e \textit{consolidare} il cluster.
+    }
+    \item {
+        Storage: la gestione dei dati è fatta dai Volumi. Questi permettono di mantenere dati tra Pods e dopo la loro morte. 
+    }
+\end{itemize}
+%
+\section{Architettura}
+\label{sec:arch}
+architettura del cluster, se c'è. Comunque spiegare l'architettura di Kubernetes dentro a OpenStack. 
+Fare anche una parte sull'architettura logica dell'applicazione che verrà implementata.
+%
+\chapter{Implementazione}
+Letteralmente
+%
+\chapter{Testing}
+Il Cluster deve andare
+%
+\chapter{Conclusione e lavori futuri}
+Mi piace molto i servizi cloud :)
