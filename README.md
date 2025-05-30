@@ -1,24 +1,10 @@
 # Unibo Tesi
-
-[![Build Status](https://travis-ci.com/NiccoMlt/Unibo-Tesi-Template.svg?branch=master)](https://travis-ci.com/NiccoMlt/Unibo-Tesi-Template)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![made-with-latex](https://img.shields.io/badge/Made%20with-LaTeX-1f425f.svg)](https://www.latex-project.org/)
 [![made-for-VSCode](https://img.shields.io/badge/Made%20for-VSCode-1f425f.svg)](https://code.visualstudio.com/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Template LaTeX per una tesi per l'Università di Bologna, Dipartimento di Informatica - Scienza e Ingegneria.
-
-## Tutorial
-
-Utilizzare il bottone <kbd>Use this template</kbd> per generare un nuovo repository per realizzare la propria tesi di laurea.
-
-[![Use this template explaination](https://help.github.com/assets/images/help/repository/use-this-template-button.png)](https://help.github.com/en/articles/creating-a-repository-from-a-template)
-
-Per l'utilizzo, si consiglia di utilizzare una versione recente di TeXLive (2018+), di MikTeX o di MacTeX (non testato) e di avere installato un Java Runtime Environment con versione compresa tra 5 e 10 (testato OpenJDK 8).
-
-Inoltre, si consiglia di installare Python 3.x e il pacchetto `pygments` per permettere l'evidenziazione del codice.
-
-Vedere la sezione [Dettagli tecnici](#dettagli-tecnici) per ulteriori dettagli.
 
 ## Consigli
 
