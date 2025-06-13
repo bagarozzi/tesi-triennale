@@ -9,7 +9,21 @@ Qualcosa tipo la relazione di tirocinio sul perché sto facendo questa cosa. (gu
 %
 %In questo documenti si affronterà l'analisi dei componenti necessari e delle possibili alternative disponibili, l'architettura ed il funzionamento pratico del cluster. 
 %
-\chapter{Architettura e componenti necessari}
+\chapter{Architettura e componenti utilizzati}
+\section{OpenStack}
+OpenStack è una piattaforma open-source per la gestione delle infrastrutture cloud. Nell'contesto dell'INGV è stata adottata come piattaforma per la creazione di
+macchine virtuali permettendo di dividere le risorse tra diversi gruppi di utenti (detti \textit{tenant}) che possono essere i ricercatori.
+Questa piattaforma è particolarmente flessibile perché, essendo divisa in componenti, permette di scegliere quali utilizzare e come configurarli. Essa può essere
+una scelta valida per le imprese o istituzioni che non vogliono dipendere da fornitori di servizi esterni o hanno bisogno di soluzioni personalizzate.
+Vediamo elencati ora alcuni dei principali componenti di OpenStack:
+\begin{itemize}
+    \item \textbf{Nova}: è il servizio che gestisce il \textit{provisioning} delle macchine virtuali e fisiche. 
+    \item \textbf{Neutron}: gestisce tutti gli aspetti della rete, permettendo la comunicazione tra risorse e componenti di OpenStack. 
+    \item \textbf{Cinder}: espone l'API per la gestione dello storage a blocchi, fornendo agli utenti ed alle macchine i volumi necessari.
+    \item \textbf{Glance}: mantiene le immagini e metadati che l'utente utilizza in altri servizi. 
+    \item \textbf{Keystone}: fornisce autenticazione per i client e per i tenant.
+    \item \textbf{Horizon}: l'interfaccia web che permette agli utenti di interagire con OpenStack attraverso un browser. Fornisce un'interfaccia grafica per la gestione delle risorse.
+\end{itemize}
 \section{Cloud-Init}
 Una tecnologia di Infrastructure-as-Code con cui le istanze vengono configurate automaticamente al loro avvio installando pacchetti, scrivendo file di configurazione e inviando comandi alla shell. \\
 Questo componente è già nativo in OpenStack e quindi rende lo sviluppo veloce soprattutto in questo momento che si è nelle fasi iniziali del progetto. Potrebbe non essere la soluzione giusta in un contesto di produzione infatti vi sono applicativi più completi per l'automazione del deployment di cluster HPC come:
