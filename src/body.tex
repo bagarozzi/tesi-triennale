@@ -32,19 +32,19 @@ da quelle di sviluppo. L'idea è quella di fornire agli utenti un ambiente isola
 reti, VPN, firewall ed esporre i servizi su un indirizzo IP pubblico senza preoccuparsi della gestione dell'infrastruttura sottostante e danneggiare le risorse
 in produzione.
 %
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{res/vdc-diagram.png}
-    \caption{Schema di un Virtual Data Center}
-    \label{fig:vdc}
-\end{figure}
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.8\textwidth]{res/vdc-diagram.png}
+%    \caption{Schema di un Virtual Data Center}
+%    \label{fig:vdc}
+%\end{figure} 
 %
 \\
 \\
 \textbf{Domanda: è opportuno spiegare OpenStack all'interno del capitolo sul "contesto" oppure ha senso spiegarlo
 qui dove si spiegano tutti i componenti?\\
 Per ora lo spiego qui al massimo lo spostiamo.}
-\\
+\\ 
 \\
 Ora che si ha compreso OpenStack potrebbe avere senso compararla con Kubernetes; questo risulta difficile perché
 le due piattaforme hanno obbiettivi e contesti di applicazione diversi. Vediamo una breve panoramica delle due
@@ -55,18 +55,15 @@ messe a confronto:
     \item \textbf{Kubernetes} si concentra sulla gestione ed orchestrazione di container, unità più piccole
         rispetto alle macchine virtuali ed il suo obbiettivo finale è l'esecuzione e lo scaling di applicazioni.
 \end{itemize}
-\\
-\\
-\textbf{Rivedere questo pippone filosofico di confrono}
-\\
-\\
+\textbf{Rivedere questo pippone filosofico di confrono} 
+\\ 
 Anche l'architettura è diversa: la prima è formata da diversi componenti interconnessi mentre la seconda è formata 
 da nodi worker e nodi master che lavorano all'esecuzione di container contenuti in pod (l'unità base di Kubernets, v. sezione \ref{sec:kube}).\\
 Si può dire che OpenStack è più completa e meno astratta perché punta al controllo di servizi cloud basici mentre Kubernetes lavora 
 a livello applicativo, erogando direttamente il servizio usato dagli utenti.\\
 Entrambe possono essere disposte su macchine fisiche ma la tendenza del momento è disporre Kubernetes già su piattaforme virtualizzate, infatti 
 i principali fornitori di servizi cloud lo erogano come \textit{Platform-as-a-Service} (PaaS) pronto all'uso permettendo agli sviluppatori
-di pensare a livello applicativo facilitando lo scaling verticale senza rapportarsi con macchine fisiche. \\
+di pensare a livello applicativo facilitando lo scaling verticale senza rapportarsi con macchine fisiche.\\
 In conclusione le due piattaforme vengono scelte da enti con necessità di astrazione ed implementazione: chi avrà bisogno della gestione 
 dell'intera infrastruttura a partire dalle macchine fisiche (OpenStack) o chi avrà bisogno di disporre ed erogare applicazioni scalabili.
 \section{Cloud-Init}
@@ -112,11 +109,11 @@ I principali componenti sono quindi:
         Storage: la gestione dei dati è fatta dai Volumi. Questi permettono di mantenere dati tra Pods e dopo la loro morte. 
     }
 \end{itemize}
-\\
-\\
+%\\
+%\\
 \textbf{Concludere con la spiegazione di Kubernetes: storage}
-\\
-\\
+%\\
+%\\
 %
 \section{Architettura}
 \label{sec:arch}
