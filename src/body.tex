@@ -67,10 +67,8 @@ di pensare a livello applicativo facilitando lo scaling verticale senza rapporta
 In conclusione le due piattaforme vengono scelte da enti con necessità di astrazione ed implementazione: chi avrà bisogno della gestione 
 dell'intera infrastruttura a partire dalle macchine fisiche (OpenStack) o chi avrà bisogno di disporre ed erogare applicazioni scalabili.
 \section{Cloud-Init}
-Una tecnologia di \textit{Infrastructure-as-Code} con cui le istanze vengono configurate automaticamente al loro avvio installando pacchetti, scrivendo file di configurazione e inviando comandi alla shell. \\
-\\
-\textbf{Spiegare lati positivi e negativi dell'IAC.}
-\\
+Una tecnologia di \textit{Infrastructure-as-Code} (IaC) con cui le istanze vengono configurate automaticamente al loro avvio installando pacchetti, scrivendo file di configurazione e inviando comandi alla shell. \\
+IaC è un approccio che automatizza la creazione e gestione dei componenti dell'infrastruttura. Favorisce la standardizzazione ed il versioning velocizzando notevolmente il lavoro degli sviluppatori.
 Questo componente è già nativo in OpenStack e quindi rende lo sviluppo veloce soprattutto in questo momento che si è nelle fasi iniziali del progetto. Potrebbe non essere la soluzione giusta in un contesto di produzione infatti vi sono applicativi più completi per l'automazione del deployment di cluster HPC come:
 \begin{itemize}
     \item \textbf{Heat}: il servizio integrato della suite OpenStack per orchestrare tramite template, che in questo caso non era disponibile.
