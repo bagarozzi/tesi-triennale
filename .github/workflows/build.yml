@@ -22,7 +22,6 @@ jobs:
           cd install-tl-2*
           sudo perl ./install-tl -profile /dev/null --no-interaction
           echo "/usr/local/texlive/2025/bin/x86_64-linux" >> $GITHUB_PATH
-          tlmgr install arara
 
 
       - name: Compile Thesis
