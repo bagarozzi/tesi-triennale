@@ -16,9 +16,14 @@ jobs:
       - name: Install TeX and Arara
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-full curl unzip
-          tlmgr init-usertree
+          sudo apt-get install -y wget perl
+          wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+          tar -xzf install-tl-unx.tar.gz
+          cd install-tl-*
+          sudo ./install-tl -profile /dev/null --no-interaction
+          echo "/usr/local/texlive/2025/bin/x86_64-linux" >> $GITHUB_PATH
           tlmgr install arara
+
 
       - name: Compile Thesis
         run: arara tesi.tex
