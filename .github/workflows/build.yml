@@ -20,7 +20,7 @@ jobs:
           wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
           tar -xzf install-tl-unx.tar.gz
           cd install-tl-2*
-          perl ./install-tl -profile /dev/null --no-interaction
+          sudo perl ./install-tl -profile /dev/null --no-interaction
           echo "/usr/local/texlive/2025/bin/x86_64-linux" >> $GITHUB_PATH
           tlmgr install arara
 
