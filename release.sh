@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script is run as a cron job on my homelab and releases a new copy of the thesis if it finds changes
+
 echo "$(date +"%d-%m-%Y %T"): Started automatic release" >> release.log
 
 if git diff --quiet $(git describe --tags --abbrev=0); then
