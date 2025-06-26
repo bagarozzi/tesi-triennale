@@ -1,0 +1,52 @@
+#cloud-config
+
+package_update: true
+package_upgrade: true
+
+packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gpg
+
+runcmd:
+  # Enable ports as specified in the Kubernetes documentation 
+  - sudo ufw allow 10250,10256/tcp
+  - sudo ufw allow 30000:32767/tcp
+  - sudo ufw allow 30000:32767/udp
+
+  # Add the Docker and Kuberntes repositories
+  - sudo install -m 0755 -d /etc/apt/keyrings
+  - sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  - sudo chmod a+r /etc/apt/keyrings/docker.asc
+  - echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  - sudo apt-get update
+
+  # Add the Kubernetes repositories
+  - curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+  - echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+  - sudo apt-get update
+
+  # Install Containerd container runtime
+  - sudo apt-get install containerd.io
+
+  # Create the configuration file
+  - sudo mkdir -p /etc/containerd
+  - sudo containerd config default | sudo tee /etc/containerd/config.toml
+
+  # TODO: Set systemd as the cgroup manager
+  - sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+
+  # Enable IP Forwarding
+  - sudo sysctl net.ipv4.ip_forward=1
+
+  # Restart and enable containerd
+  - sudo systemctl enable containerd
+  - sudo systemctl restart containerd
+
+  # Install Kubernetes tools
+  - sudo apt-get install -y kubelet kubeadm kubectl
+  - sudo apt-mark hold kubelet kubeadm kubectl
+
+  # Enable kubelet
+  - sudo systemctl enable --now kubelet
