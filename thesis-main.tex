@@ -230,9 +230,9 @@ A questo punto si può procedere in diversi modi:
 \end{itemize}
 Nel primo caso sarà sufficiente generare il comando manualmente sul nodo master per poi accedere in SSH a ciascun nodo worker ed eseguire il comando.\\
 Nel secondo caso viene implementato uno script bash che esegue l'operazione in automatico sul nodo master e poi lo esegue, connettendosi in SSH, in ciascun nodo worker. 
-Questo script deve essere eseguito mentre si è connessi alla rete VPN che permette l'accesso al VDC dal proprio terminale, in più bisogna scrivere su un file di testo l'indirizzo IP del nodo master e dei nodi worker.,
-successivamente lo script si occuperà di leggere il file e di eseguire i comandi necessari per l'integrazione dei nodi worker.
-\lstinputlisting[float, language=bash, label={lst:join-script}, caption=Script di integrazione dei nodi worker]{listings/join-nodes.sh}[!hbt]
+Questo script deve essere eseguito mentre si è connessi alla rete VPN che permette l'accesso al VDC dal proprio terminale, in più bisogna scrivere su un file di testo l'indirizzo IP del nodo master e dei nodi worker.
+Successivamente lo script si occuperà di leggere il file e di eseguire i comandi necessari per l'integrazione dei nodi worker (v. \Cref{lst:join-script}).
+\lstinputlisting[float, language=bash, label={lst:join-script}, caption=Script di integrazione dei nodi worker]{listings/join-nodes.sh}
 \subsection{Configurazione di un controller Ingress}
 \label{sec:ingress}
 Infine viene installato l'Ingress Controller, per questa implementazione è stato scelto \textit{NginX Ingress Controller}. Questo componente è solitamente
@@ -306,7 +306,7 @@ senza questo accorgimento la richiesta arriverebbe al controller ma non verrebbe
 
 \nocite{*} % Remove this as soon as you have the first citation
 
-\bibliographystyle{alpha}
+\bibliographystyle{ieeetr}
 \bibliography{bibliography}
 
 \begin{acknowledgements} % this is optional
