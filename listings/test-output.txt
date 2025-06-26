@@ -1,0 +1,22 @@
+HTTP/1.1 200 OK
+Date: Thu, 26 Jun 2025 08:31:27 GMT
+Content-Type: text/html
+Content-Length: 383
+Connection: keep-alive
+Last-Modified: Thu, 26 Jun 2025 08:31:12 GMT
+ETag: "685d0550-17f"
+Accept-Ranges: bytes
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cats</title>
+</head>
+<body>
+  <h1>All About Cats</h1>
+  <p>Cats are small, furry animals that are often kept as pets. They are known for their independence and playful nature.</p>
+  <img src="https://placekitten.com/400/300" alt="A cute cat">
+  <p><a href="dogs.html">Learn about dogs</a></p>
+</body>
+</html>
