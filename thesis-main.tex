@@ -193,8 +193,7 @@ Inoltre in ambienti di produzione è opportuno distribuire i componenti di contr
 di ciascun componente e le API verranno esposte al resto del cluster attraverso un load balancer che bilancerà il carico nei vari nodi master (v. \Cref{fig:kube-ha-topo}). E' indicato distribuire i nodi in diversi datacenter 
 (chiamati negli ambienti cloud \textit{availability zones}) per mitigare il rischio di interruzione dei servizi\cite{kubernetes}.
 %
-\FloatBarrier
-\begin{figure}
+\begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/kube-ha-topo.png}
     \caption{Possibile architettura di una cluster Kubernetes ad alta disponiblità}
@@ -282,7 +281,7 @@ $ curl -i -H "Host: www.animals.com" http://gw-ingv-labdidattica.pp.ingv.it:1700
 Visto che il dominio che utilizzato (\texttt{www.animals.com}) non è inserito in nessun DNS non sarà possibile scrivere direttamente l'URL ma si dovrà aggiungere manualmente
 l'indirizzo all'header della richiesta. In questo modo quando la richiesta viene inoltrata attraverso da Ingress questo saprà quale host si sta richiedendo,
 senza questo accorgimento la richiesta arriverebbe al controller ma non verrebbe inoltrata a nessun servizio perché il campo header conterrebbe un altro dominio. 
-\lstinputlisting[language=bash,label={lst:output-local}, caption=Output della richiesta cUrl]{listings/test-output.txt}
+\lstinputlisting[float, language=bash,label={lst:output-local}, caption=Output della richiesta cUrl]{listings/test-output.txt}
 \chapter{Conclusione e lavori futuri}
 %
 % TODO: draft
