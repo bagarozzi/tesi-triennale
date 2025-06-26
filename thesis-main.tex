@@ -9,15 +9,15 @@
 
 \school{\unibo}
 \programme{Corso di Laurea in Ingegneria e Scienze Informatiche}
-\title{Fancy Title}
-\author{Candidate Name}
+\title{Automazione del dispiegamento di un cluster Kubernetes in ambiente OpenStack}
+\author{Federico Bagattoni}
 \date{\today}
-\subject{Supervisor's course name}
-\supervisor{Prof. Supervisor Here}
-\cosupervisor{Dott. CoSupervisor 1}
-\morecosupervisor{Dott. CoSupervisor 2}
+\subject{Virtualizzazione ed Integrazione di Sistemi}
+\supervisor{Prof. Vittorio Ghini}
+\cosupervisor{Dott. Stefano Cacciaguerra}
+%\morecosupervisor{Dott. CoSupervisor 2}
 \session{I}
-\academicyear{2022-2023}
+\academicyear{2024-2025}
 
 % Definition of acronyms
 \acrodef{IoT}{Internet of Thing}
@@ -47,7 +47,8 @@ Optional. Max a few lines.
 \mainmatter
 
 % TODO: rileggere, andare a capo, typos
-\chapter{Contesto e obbiettivi del progetto}
+\chapter{Introduzione}
+\section{Contesto e obiettivi del progetto}
 % Introduzione al contesto, le necessità e l'ambiente.
 Il progetto si inserisce all'interno di una serie di studi di fattibilità volti all'implementazione di servizi informatici sull'infrastruttura virtualizzata dell'Istituto Nazionale di Geofisica e Vulcanologia (INGV).
 L'esigenza di disporre di un'infrastruttura interna nasce dalla volontà di ridurre i costi associati all'adozione di servizi cloud commerciali, e dalla necessità di avere un ambiente personalizzato, sicuro e pienamente amministrabile,
@@ -80,8 +81,10 @@ esterne o da lunghi processi di approvazione per l'uso di risorse.
 In definitiva, i VDC e l'approccio IaC si rivelano strumenti abilitanti fondamentali per la nuova generazione di ricerca scientifica aperta, distribuita e collaborativa.
 Questo progetto si propone di contribuire a questa evoluzione, offrendo soluzioni pratiche per l'automazione e la standardizzazione di ambienti di calcolo avanzati all'interno della piattaforma Nereide.
 
-% Struttura della tesi
-% TODO
+\section{Struttura del documento}
+In questo documento verranno prima presentati i componenti utilizzati per la realizzazione del progetto, in particolare OpenStack e Kubernetes, e le tecnologie di automazione come Cloud-Init.
+Successivamente verrà descritta l'implementazione del cluster Kubernetes, il provisioning delle macchine virtuali, la configurazione dei nodi e l'installazione dei pacchetti necessari.
+Infine, verrà presentato un semplice test di funzionamento del cluster e le conclusioni con i possibili sviluppi futuri del progetto.
 \chapter{Architettura e componenti utilizzati}
 \section{OpenStack}
 OpenStack è una piattaforma open-source per la gestione delle infrastrutture cloud. Nell'contesto dell'INGV è stata adottata come piattaforma per la creazione di
@@ -217,15 +220,19 @@ Un cluster composto da un nodo master e tre nodi worker sarà composto come in f
     \label{fig:kube-cluster}
 \end{figure}
 \section{Creazione del cluster}
-La fase successiva è quella di integrazione dei nodi worker nel cluster. Questa operazione non è completamente automatizzata in quanto utilizzando
+La fase successiva è quella di integrazione dei nodi worker nel cluster. Questa operazione non è completamente automatizzabile in quanto utilizzando
 l'interfaccia grafica in congiunzione con \texttt{kubeadm} è necessario reperire un token di autenticazione che poi va inserito nei nodi worker.\\
 Questo token viene generato dal nodo master e non è conosciuto a priori.\\
-Ci sono diverse alternative per rendere questa fase il più automatica possible:
+A questo punto si può procedere in diversi modi:
 \begin{itemize}
-    \item Utilizzo di API per automatizzare il processo di generazione e distribuzione dei token
-    \item Implementazione di script che gestiscano automaticamente l'integrazione dei nodi worker
-    \item Configurazione di sistemi di service discovery per l'auto-registrazione dei nodi
+    \item Lasciare questo processo in manuale, l'utente dovrà accedere al master, copiare il comando e poi eseguirlo in ciascun nodo worker
+    \item Implementazione di script che gestiscano automaticamente l'integrazione dei nodi worker, essenzialmente automatizando ciò che fa l'utente nel punto precedente
 \end{itemize}
+Nel primo caso sarà sufficiente eseguire il comando \texttt{kubeadm token create --print-join-command} sul nodo master per poi
+accedere in SSH a ciascun nodo worker ed eseguire il comando.\\
+Nel secondo caso viene implementato uno script bash che esegue il comando \texttt{kubeadm token create --print-join-command} sul nodo master e poi lo esegue in ciascun nodo worker. 
+Questo script deve essere eseguito mentre si è connessi alla rete VPN che permette l'accesso al VDC dal proprio terminale.
+
 \subsection{Configurazione di un controller Ingress}
 \label{sec:ingress}
 Infine viene installato l'Ingress Controller, per questa implementazione è stato scelto \textit{NginX Ingress Controller}. Questo componente è solitamente
