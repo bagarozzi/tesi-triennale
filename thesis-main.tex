@@ -206,13 +206,17 @@ di ciascun componente e le API verranno esposte al resto del cluster attraverso 
 \section{Configurazione ed installazione dei pacchetti}
 Cloud-Init si occupa dell'installazione e configurazione preliminare dei nodi, in particolare:
 \begin{itemize}
-    \item installa i pacchetti necessari per il funzionamento del cluster: \texttt{containerd}, \texttt{kubeadm}, \texttt{kubectl} e \texttt{kubelet}
-    \item l'impostazione di \texttt{Systemd} come cgroup manager per \texttt{containerd} e Kubernetes
-    \item l'attivazione di \textit{ip forwading} per permettere ai nodi di scambiare pacchetti tra di loro
+    \item aggiunge le repository poi installa i pacchetti necessari per il funzionamento del cluster: \texttt{containerd}, \texttt{kubeadm}, \texttt{kubectl} e \texttt{kubelet}
+    \item {l'impostazione di \texttt{Systemd} come cgroup manager per \texttt{containerd} e Kubernetes.
+        \lstinputlisting[language=bash,label={lst:systemd}, firstline=37, lastline=37]{listings/master.yaml}
+    }
+    \item {l'attivazione di \textit{ip forwading} per permettere ai nodi di scambiare pacchetti tra di loro.
+        \lstinputlisting[language=bash,label={lst:ip-fwd}, firstline=40, lastline=40]{listings/master.yaml}
+    }
     \item l'installazione del plugin CNI \textit{Calico} per la gestione della rete
     \item infine, l'avvio del cluster
 \end{itemize}
-Un cluster composto da un nodo master e tre nodi worker sarà composto come in figura \ref{fig:kube-cluster}. Ovviamente l'architettura del cluster cambia in base all'ambiente in cui viene disposto.
+Un cluster composto da un nodo master e tre nodi worker sarà composto come in \Cref{fig:kube-cluster}. Ovviamente l'architettura del cluster cambia in base all'ambiente in cui viene disposto.
 \begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/kube-vdc.png}
