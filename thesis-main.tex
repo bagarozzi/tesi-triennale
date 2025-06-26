@@ -228,11 +228,11 @@ A questo punto si può procedere in diversi modi:
     \item Lasciare questo processo in manuale, l'utente dovrà accedere al master, copiare il comando e poi eseguirlo in ciascun nodo worker
     \item Implementazione di script che gestiscano automaticamente l'integrazione dei nodi worker, essenzialmente automatizando ciò che fa l'utente nel punto precedente
 \end{itemize}
-Nel primo caso sarà sufficiente eseguire il comando \texttt{kubeadm token create --print-join-command} sul nodo master per poi
-accedere in SSH a ciascun nodo worker ed eseguire il comando.\\
-Nel secondo caso viene implementato uno script bash che esegue il comando \texttt{kubeadm token create --print-join-command} sul nodo master e poi lo esegue in ciascun nodo worker. 
-Questo script deve essere eseguito mentre si è connessi alla rete VPN che permette l'accesso al VDC dal proprio terminale.
-
+Nel primo caso sarà sufficiente generare il comando manualmente sul nodo master per poi accedere in SSH a ciascun nodo worker ed eseguire il comando.\\
+Nel secondo caso viene implementato uno script bash che esegue l'operazione in automatico sul nodo master e poi lo esegue, connettendosi in SSH, in ciascun nodo worker. 
+Questo script deve essere eseguito mentre si è connessi alla rete VPN che permette l'accesso al VDC dal proprio terminale, in più bisogna scrivere su un file di testo l'indirizzo IP del nodo master e dei nodi worker.,
+successivamente lo script si occuperà di leggere il file e di eseguire i comandi necessari per l'integrazione dei nodi worker.
+\lstinputlisting[float, language=bash, label={lst:join-script}, caption=Script di integrazione dei nodi worker]{listings/join-nodes.sh}[!hbt]
 \subsection{Configurazione di un controller Ingress}
 \label{sec:ingress}
 Infine viene installato l'Ingress Controller, per questa implementazione è stato scelto \textit{NginX Ingress Controller}. Questo componente è solitamente
