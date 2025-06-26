@@ -5,6 +5,7 @@
 \usepackage{notes}
 \usepackage{shortcuts}
 \usepackage{acronym}
+\usepackage{placeins}
 
 \school{\unibo}
 \programme{Corso di Laurea in Ingegneria e Scienze Informatiche}
@@ -192,6 +193,7 @@ Inoltre in ambienti di produzione è opportuno distribuire i componenti di contr
 di ciascun componente e le API verranno esposte al resto del cluster attraverso un load balancer che bilancerà il carico nei vari nodi master (v. \Cref{fig:kube-ha-topo}). E' indicato distribuire i nodi in diversi datacenter 
 (chiamati negli ambienti cloud \textit{availability zones}) per mitigare il rischio di interruzione dei servizi\cite{kubernetes}.
 %
+\FloatBarrier
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{figures/kube-ha-topo.png}
@@ -208,14 +210,13 @@ Cloud-Init si occupa dell'installazione e configurazione preliminare dei nodi, i
     \item l'installazione del plugin CNI \textit{Calico} per la gestione della rete
     \item infine, l'avvio del cluster
 \end{itemize}
-Un cluster composto da un nodo master e tre nodi worker sarà così composto:
-\begin{figure}
+Un cluster composto da un nodo master e tre nodi worker sarà composto come in figura \ref{fig:kube-cluster}. Ovviamente l'architettura del cluster cambia in base all'ambiente in cui viene disposto.
+\begin{figure}[!hbt]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/kube-vdc.png}
+    \includegraphics[width=0.5\textwidth]{figures/kube-vdc.png}
     \caption{Schema del cluster disposto su un VDC}
     \label{fig:kube-cluster}
 \end{figure}
-Ovviamente l'architettura del cluster cambia in base all'ambiente in cui viene disposto.
 \section{Creazione del cluster}
 La fase successiva è quella di integrazione dei nodi worker nel cluster. Questa operazione non è completamente automatizzata in quanto utilizzando
 l'interfaccia grafica in congiunzione con \texttt{kubeadm} è necessario reperire un token di autenticazione che poi va inserito nei nodi worker.\\
@@ -249,12 +250,13 @@ posizionate su più pod che servono due pagine web distinte, come per simulare l
 
 I pod vengono racchiusi in un servizio che espone il suo endpoint al cluster; infine una risorsa Ingress espone il servizio all'esterno del cluster,
 con le modalità menzionate alla \Cref{sec:ingress}, instradando il traffico verso i servizi in base al percorso richiesto.
-\begin{figure}
+\begin{figure}[!hbt]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/test-deployment.png}
+    \includegraphics[width=0.9\textwidth]{figures/test-deployment.png}
     \caption{Schema del deployment di prova}
     \label{fig:test-deployment}
 \end{figure}
+\FloatBarrier
 Il deployment viene applicato tramite i seguenti comandi:
 \begin{lstlisting}
 $ git clone https://github.com/bagarozzi/minikube-examples.git examples
@@ -266,7 +268,7 @@ $ kubectl get svc -n ingress-nginx
 \end{lstlisting}
 Troveremo il numero di porta alla colonna \texttt{PORT(S)} della riga corrispondente al servizio \texttt{ingress-nginx-controller}.
 % foto del comando o output codice?
-Ora è possibile verificare il funzionamento in locale tramite \texttt{curl}.
+Ora è possibile verificare il funzionamento in locale tramite \texttt{curl}. Il risultato sarà quello indicato al \Cref{lst:output-local}.
 \begin{lstlisting}
 $ curl -i -H "Host: www.animals.com" http://127.0.0.1:30900/cats
 \end{lstlisting}
@@ -274,13 +276,13 @@ Successivamente si espone il cluster all'esterno aggiungendo una regola di port 
 un nodo qualsiasi del cluster, sulla porta NodePort dell'Ingress Controller.
 % foto della regola di port forwarding
 Infine si verifica la disponiblità del servizio da un'altra macchina non collegata alla rete interna del VDC. 
-
-Visto che il dominio che utilizzato (\texttt{www.animals.com}) non è inserito in nessun DNS non sarà possibile scrivere direttamente l'URL ma si dovrà aggiungere manualmente
-l'indirizzo all'header della richiesta. In questo modo quando la richiesta viene inoltrata attraverso da Ingress questo saprà quale host si sta richiedendo,
-senza questo accorgimento la richiesta arriverebbe al controller ma non verrebbe inoltrata a nessun servizio perché il campo header conterrebbe un altro dominio. 
 \begin{lstlisting}
 $ curl -i -H "Host: www.animals.com" http://gw-ingv-labdidattica.pp.ingv.it:17001/cats
 \end{lstlisting}
+Visto che il dominio che utilizzato (\texttt{www.animals.com}) non è inserito in nessun DNS non sarà possibile scrivere direttamente l'URL ma si dovrà aggiungere manualmente
+l'indirizzo all'header della richiesta. In questo modo quando la richiesta viene inoltrata attraverso da Ingress questo saprà quale host si sta richiedendo,
+senza questo accorgimento la richiesta arriverebbe al controller ma non verrebbe inoltrata a nessun servizio perché il campo header conterrebbe un altro dominio. 
+\lstinputlisting[language=bash,label={lst:output-local}, caption=Output della richiesta cUrl]{listings/test-output.txt}
 \chapter{Conclusione e lavori futuri}
 %
 % TODO: draft
