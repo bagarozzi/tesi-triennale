@@ -273,7 +273,6 @@ Prima di verificare il funzionamento bisogna recuperare la porta su cui è espos
 $ kubectl get svc -n ingress-nginx                
 \end{lstlisting}
 Troveremo il numero di porta alla colonna \texttt{PORT(S)} della riga corrispondente al servizio \texttt{ingress-nginx-controller}.
-% foto del comando o output codice?
 Ora è possibile verificare il funzionamento in locale tramite \texttt{curl}. Il risultato sarà quello indicato al \Cref{lst:output-local}.
 \begin{lstlisting}
 $ curl -i -H "Host: www.animals.com" http://127.0.0.1:30900/cats
