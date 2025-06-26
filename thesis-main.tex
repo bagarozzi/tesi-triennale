@@ -236,7 +236,7 @@ Nel primo caso sarà sufficiente generare il comando manualmente sul nodo master
 Nel secondo caso viene implementato uno script bash che esegue l'operazione in automatico sul nodo master e poi lo esegue, connettendosi in SSH, in ciascun nodo worker. 
 Questo script deve essere eseguito mentre si è connessi alla rete VPN che permette l'accesso al VDC dal proprio terminale, in più bisogna scrivere su un file di testo l'indirizzo IP del nodo master e dei nodi worker.
 Successivamente lo script si occuperà di leggere il file e di eseguire i comandi necessari per l'integrazione dei nodi worker (v. \Cref{lst:join-script}).
-\lstinputlisting[float, language=bash, label={lst:join-script}, caption=Script di integrazione dei nodi worker]{listings/join-nodes.sh}
+\lstinputlisting[language=bash, label={lst:join-script}, caption=Script di integrazione dei nodi worker]{listings/join-nodes.sh}
 \subsection{Configurazione di un controller Ingress}
 \label{sec:ingress}
 Infine viene installato l'Ingress Controller, per questa implementazione è stato scelto \textit{NginX Ingress Controller}. Questo componente è solitamente
@@ -249,10 +249,13 @@ Qui si possono scegliere due modalità di configurazione, anche in funzione dell
         indirizzo IP ed utilizza un nodo come punto di ingresso per il traffico esterno, successivamente annuncia tramite ARP che un servizio è raggiungibile tramite 
         quel nodo.\\
         Questo metodo non è implementabile perché il cluster è protetto da firewall mentre MetalLB ha bisogno di essere esposto completamente alla rete.
-    \item \textbf{Esposizione tramite NodePort}: un metodo decisamente più semplice che consiste in impostare l'Ingress Controller in modalità NodePort.
+    \item {\textbf{Esposizione tramite NodePort}: un metodo decisamente più semplice che consiste in impostare l'Ingress Controller in modalità NodePort.
         In questo modo il traffico esterno viene inviato ad una porta specifica di uno qualsiasi dei nodi del cluster, che poi lo inoltra al controller (che poi
         eseguirà il routing verso i servizi).\\
-        In questo progetto è stata scelta questa modalità sia per motivi di semplicità nel testing sia perché il contesto non permette l'utilizzo di MetalLB.
+        In questo progetto è stata scelta questa modalità sia per motivi di semplicità nel testing sia perché il contesto non permette l'utilizzo di MetalLB.\\
+        A questo fine sarà sufficiente applicare la configurazione del controller:
+        \lstinputlisting[language=bash, label={lst:nginx-ctl}]{listings/nginx-ctl.sh}
+        }
 \end{itemize} 
 \chapter{Testing}
 Per verificare il corretto funzionamento del cluster viene eseguita una semplica applicazione web stateless utilizzando NginX come server web. Il deployment consiste in due applicazioni
