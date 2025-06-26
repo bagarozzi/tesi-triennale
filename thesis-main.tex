@@ -304,14 +304,40 @@ l'indirizzo all'header della richiesta. In questo modo quando la richiesta viene
 senza questo accorgimento la richiesta arriverebbe al controller ma non verrebbe inoltrata a nessun servizio perché il campo header conterrebbe un altro dominio. 
 \lstinputlisting[float, language=bash,label={lst:output-local}, caption=Output della richiesta cUrl]{listings/test-output.txt}
 \section{Considerazioni sui test}
+\label{sec:test-concl}
 Se eseguiti con successo, i test della \Cref{sec:test-depl} dimostrano una piena funzionalità del cluster nello svolgere le operazioni di base come creazione di pods, servizi e routing di Ingress.
 Tuttavia è importante osservare come questi non siano completamente esaustivi ed assoluti; sarà cura dei futuri utilizzatori e sviluppatori di questo progetto mantenere i componenti aggiornati e compatibili tra
 di loro nel caso vengano utilizzati add-ons, plugin o funzionalità aggiuntive.
 
 Inoltre, i test non coprono aspetti di sicurezza, resilienza o performance del cluster, che sono fondamentali in un ambiente di produzione. Per esempio, sarà opportuno 
 aumentare il numero di risorse allocate ai nodi ed il numero di nodi stessi nel caso si vogliano implementare servizi onerosi. 
+%
 \chapter{Conclusione e lavori futuri}
-
+Sono stati raggiunti tutti gli obiettivi prefissati, permettendo la creazione automatizzata di un cluster Kubernetes su un VDC OpenStack.
+Bisogna osservare che il progetto è stato sviluppato in un contesto di ricerca e didattico con necessità particolari e diverse rispetto ad 
+un ambiente di produzione che hanno portato a scelte progettuali specifiche.\\
+Le conseguenze sono, per l'appunto, che il cluster non è adatto per un utilizzo di produzione e che non sono stati implementati test di sicurezza, resilienza o performance
+come menzionato nella \Cref{sec:test-concl}.
+D'altra parte lo scopo del progetto ed il contesto in cui si inserisce non necessità di ulteriore sviluppo e sarà oggetto di futuri lavori l'espansione del progetto.
+\section{Sviluppi futuri}
+Al fine di rendere il progetto più completo e pronto per un utilizzo in produzione si possono fare i seguenti sviluppi:
+\begin{itemize}
+    \item {\textbf{Monitoraggio}: implementazione di un sistema di monitoraggio e logging (come Grafana o Prometheus) per tenere traccia dello stato del cluster, dei servizi e degli oggetti.
+    Questo permetterebbe di individuare problemi e risolverli in modo più rapido oltre che a tracciare l'utilizzo delle risorse e l'efficienza dei servizi.
+    }
+    \item{\textbf{Versatilità}: Implementazione del sistema in sistemi operativi diversi da quello utilizzato in questo progetto così da rendere il cluster più versatile e favorire la compatibilità con altri sistemi.
+    }
+    \item{
+        \textbf{Resilienza}: Introduzione di molteplici copie del nodo master per aumentare la resilienza del cluster. Questo comporterà l'introduzione di un load balancer per dividere il traffico tra i nodi master.
+        In più si possono introdurre più istanze di \texttt{etcd} (il database che contiene lo stato del cluster)\cite{kubernetes}.
+    }
+    \item {
+        \textbf{Ordinaria amministrazione}: assicurarsi che il cluster rimanga sicuro aggiornando i componenti e rinnovando i certificati (se deve rimanere
+        attivo per un lungo periodo di tempo), che i nodi rimangano aggiornati e con il corretto numero di risorse allocate ed introdurre un numero di efficientamenti
+        per migliorare la salute del cluster; le buone prassi per la gestione di un cluster sono introdotte nella documentazione ufficiale e dipendono dall'utilizzo che
+        si vuole fare del cluster stesso\cite{kubernetes}.
+    }
+\end{itemize}
 
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
