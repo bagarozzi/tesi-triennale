@@ -1,0 +1,4 @@
+ubuntu@k8s-master:~$ kubectl get svc -n ingress-nginx
+NAME                                 TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+ingress-nginx-controller             NodePort    10.108.235.213   <none>        80:32311/TCP,443:31769/TCP   50s
+ingress-nginx-controller-admission   ClusterIP   10.106.192.254   <none>        443/TCP                      50s
