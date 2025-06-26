@@ -89,7 +89,7 @@ Infine, verrà presentato un semplice test di funzionamento del cluster e le con
 le differenze nelle scelte implementative anche alla luce del contesto in cui si inserisce il progetto.
 \chapter{Architettura e componenti utilizzati}
 \section{OpenStack}
-OpenStack è una piattaforma open-source per la gestione delle infrastrutture cloud. Nell'contesto dell'INGV è stata adottata come piattaforma per la creazione di
+OpenStack è una piattaforma open-source per la gestione delle infrastrutture cloud. Nel contesto dell'INGV è stata adottata come piattaforma per la creazione di
 macchine virtuali permettendo di dividere le risorse tra diversi gruppi di utenti (detti \textit{tenant}) che possono essere i gruppi di ricerca.
 Questa piattaforma è particolarmente flessibile perché, essendo divisa in componenti, permette di scegliere quali utilizzare e come configurarli. Essa può essere
 una scelta valida per le imprese o istituzioni che non vogliono dipendere da fornitori di servizi esterni o hanno bisogno di soluzioni personalizzate.
@@ -173,7 +173,7 @@ Sarà quindi sufficiente che il container runtime implementi la CRI per essere u
 \begin{itemize}
     \item \textbf{Docker Engine}: utilizza internamente containerd e la sua installazione fornisce anche strumenti in linea di comando per la gestione dei container. 
         È necessario installare anche \texttt{cri-dockerd}, un adattatore che permette a Kubernetes e Docker di comunicare tramite la CRI.
-    \item \textbf{containerd}: un gestore di container open-source appositamente sviluppato per il cloud che non necessità di nessun componente aggiuntivo. 
+    \item \textbf{containerd}: un gestore di container open-source appositamente sviluppato per il cloud che non necessita di nessun componente aggiuntivo. 
         Questo si interfaccia col sistema operativo per eseguire i container.
     \item \textbf{CRI-O}: un container runtime sviluppato per Kubernetes che implementa la CRI. Utilizza \texttt{runc} (come anche containerd) per eseguire i container ma potrebbe utilizzare
         tutti i runtime che implementano la Open Container Initiative (OCI).
@@ -188,20 +188,20 @@ Il plugin deve essere conforme con la \textit{Container Network Interface} (CNI)
 Le macchine virtuali vengono create tramite l'interfaccia grafica di OpenStack (Horizon). Viene scelto di allocare diverse risorse ai nodi, precisamente: 
 \begin{itemize}
     \item Al nodo master vengono allocate più risorse rispetto ai nodi worker perché questo deve eseguire diversi processi per il mantenimento del cluster
-        come \texttt{kube-proxy} per la gestione della rete, \texttt{kube-scheluder} per l'assegnazione dei pod ai nodi, \texttt{kube-apiserver} per la API di Kubernetes etc.
+        come \texttt{kube-proxy} per la gestione della rete, \texttt{kube-scheduler} per l'assegnazione dei pod ai nodi, \texttt{kube-apiserver} per la API di Kubernetes etc.
     \item Ai nodi worker viene allocata una quantità più moderata di risorse ma comunque sufficiente per eseguire diversi pods. 
 \end{itemize}
 Chiaramente queste risorse sono relative al carico di lavoro che il cluster deve affrontare, nel caso si attenda un lavoro più intenso o si stia progettando per un ambiente di produzione
 si può decidere di avviare le macchine già con più risorse a disposizione.
 
 Inoltre in ambienti di produzione è opportuno distribuire i componenti di controllo del cluster (\textit{control plane}) su più nodi master. In questo caso ciascun nodo master eseguirà un'istanza
-di ciascun componente e le API verranno esposte al resto del cluster attraverso un load balancer che bilancerà il carico nei vari nodi master (v. \Cref{fig:kube-ha-topo}). E' indicato distribuire i nodi in diversi datacenter 
+di ciascun componente e le API verranno esposte al resto del cluster attraverso un load balancer che bilancerà il carico nei vari nodi master (v. \Cref{fig:kube-ha-topo}). È indicato distribuire i nodi in diversi datacenter 
 (chiamati negli ambienti cloud \textit{availability zones}) per mitigare il rischio di interruzione dei servizi\cite{kubernetes}.
 %
 \begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/kube-ha-topo.png}
-    \caption{Possibile architettura di una cluster Kubernetes ad alta disponiblità}
+    \caption{Possibile architettura di un cluster Kubernetes ad alta disponibilità}
     \label{fig:kube-ha-topo}
 \end{figure}
 %
@@ -210,11 +210,9 @@ Cloud-Init si occupa dell'installazione e configurazione preliminare dei nodi, i
 \begin{itemize}
     \item aggiunge le repository poi installa i pacchetti necessari per il funzionamento del cluster: \texttt{containerd}, \texttt{kubeadm}, \texttt{kubectl} e \texttt{kubelet}
     \item {l'impostazione di \texttt{Systemd} come cgroup manager per \texttt{containerd} e Kubernetes.
-        \lstinputlisting[language=bash,label={lst:systemd}, firstline=37, lastline=37]{listings/master.yaml}
+        \lstinputlisting[language=bash,label={lst:systemd-cgroup}, firstline=36, lastline=36]{listings/master.yaml}
     }
-    \item {l'attivazione di \textit{ip forwading} per permettere ai nodi di scambiare pacchetti tra di loro.
-        \lstinputlisting[language=bash,label={lst:ip-fwd}, firstline=40, lastline=40]{listings/master.yaml}
-    }
+    \item l'attivazione di \textit{ip forwading} per permettere ai nodi di scambiare pacchetti tra di loro: \verb|sudo sysctl net.ipv4.ip_forward=1|
     \item l'installazione del plugin CNI \textit{Calico} per la gestione della rete
     \item infine, l'avvio del cluster
 \end{itemize}
@@ -238,7 +236,7 @@ Nel primo caso sarà sufficiente generare il comando manualmente sul nodo master
 Nel secondo caso viene implementato uno script bash che esegue l'operazione in automatico sul nodo master e poi lo esegue, connettendosi in SSH, in ciascun nodo worker. 
 Questo script deve essere eseguito mentre si è connessi alla rete VPN che permette l'accesso al VDC dal proprio terminale, in più bisogna scrivere su un file di testo l'indirizzo IP del nodo master e dei nodi worker.
 Successivamente lo script si occuperà di leggere il file e di eseguire i comandi necessari per l'integrazione dei nodi worker (v. \Cref{lst:join-script}).
-\lstinputlisting[language=bash, label={lst:join-script}, caption=Script di integrazione dei nodi worker]{listings/join-nodes.sh}
+\lstinputlisting[float, language=bash, label={lst:join-script}, caption=Script di integrazione dei nodi worker]{listings/join-nodes.sh}
 \subsection{Configurazione di un controller Ingress}
 \label{sec:ingress}
 Infine viene installato l'Ingress Controller, per questa implementazione è stato scelto \textit{NginX Ingress Controller}. Questo componente è solitamente
@@ -254,15 +252,12 @@ Qui si possono scegliere due modalità di configurazione, anche in funzione dell
     \item {\textbf{Esposizione tramite NodePort}: un metodo decisamente più semplice che consiste in impostare l'Ingress Controller in modalità NodePort.
         In questo modo il traffico esterno viene inviato ad una porta specifica di uno qualsiasi dei nodi del cluster, che poi lo inoltra al controller (che poi
         eseguirà il routing verso i servizi).\\
-        In questo progetto è stata scelta questa modalità sia per motivi di semplicità nel testing sia perché il contesto non permette l'utilizzo di MetalLB.\\
-        A questo fine sarà sufficiente applicare la configurazione del controller:
-        \lstinputlisting[language=bash, label={lst:nginx-ctl}]{listings/nginx-ctl.sh}
-        }
+        In questo progetto è stata scelta questa modalità sia per motivi di semplicità nel testing sia perché il contesto non permette l'utilizzo di MetalLB.
 \end{itemize} 
 \chapter{Testing}
 \section{Deployment di prova}
 \label{sec:test-depl}
-Per verificare il corretto funzionamento del cluster viene eseguita una semplica applicazione web stateless utilizzando NginX come server web. Il deployment consiste in due applicazioni
+Per verificare il corretto funzionamento del cluster viene eseguita una semplice applicazione web stateless utilizzando NginX come server web. Il deployment consiste in due applicazioni
 posizionate su più pod che servono due pagine web distinte, come per simulare l'erogazione di due servizi diversi.
 
 I pod vengono racchiusi in un servizio che espone il suo endpoint al cluster; infine una risorsa Ingress espone il servizio all'esterno del cluster,
@@ -296,49 +291,18 @@ un nodo qualsiasi del cluster, sulla porta NodePort dell'Ingress Controller.
     \caption{Regola di port forwarding nel firewall del VDC}
     \label{fig:firewall-rule}
 \end{figure}
-Infine si verifica la disponiblità del servizio da un'altra macchina non collegata alla rete interna del VDC. 
+Infine si verifica la disponibilità del servizio da un'altra macchina non collegata alla rete interna del VDC. 
 \begin{lstlisting}
 $ curl -i -H "Host: www.animals.com" http://gw-ingv-labdidattica.pp.ingv.it:17001/cats
 \end{lstlisting}
-Visto che il dominio che utilizzato (\texttt{www.animals.com}) non è inserito in nessun DNS non sarà possibile scrivere direttamente l'URL ma si dovrà aggiungere manualmente
+Visto che il dominio utilizzato (\texttt{www.animals.com}) non è inserito in nessun DNS non sarà possibile scrivere direttamente l'URL ma si dovrà aggiungere manualmente
 l'indirizzo all'header della richiesta. In questo modo quando la richiesta viene inoltrata attraverso da Ingress questo saprà quale host si sta richiedendo,
 senza questo accorgimento la richiesta arriverebbe al controller ma non verrebbe inoltrata a nessun servizio perché il campo header conterrebbe un altro dominio. 
 \lstinputlisting[float, language=bash,label={lst:output-local}, caption=Output della richiesta cUrl]{listings/test-output.txt}
-\section{Considerazioni sui test}
-\label{sec:test-concl}
-Se eseguiti con successo, i test della \Cref{sec:test-depl} dimostrano una piena funzionalità del cluster nello svolgere le operazioni di base come creazione di pods, servizi e routing di Ingress.
-Tuttavia è importante osservare come questi non siano completamente esaustivi ed assoluti; sarà cura dei futuri utilizzatori e sviluppatori di questo progetto mantenere i componenti aggiornati e compatibili tra
-di loro nel caso vengano utilizzati add-ons, plugin o funzionalità aggiuntive.
-
-Inoltre, i test non coprono aspetti di sicurezza, resilienza o performance del cluster, che sono fondamentali in un ambiente di produzione. Per esempio, sarà opportuno 
-aumentare il numero di risorse allocate ai nodi ed il numero di nodi stessi nel caso si vogliano implementare servizi onerosi. 
-%
 \chapter{Conclusione e lavori futuri}
-Sono stati raggiunti tutti gli obiettivi prefissati, permettendo la creazione automatizzata di un cluster Kubernetes su un VDC OpenStack.
-Bisogna osservare che il progetto è stato sviluppato in un contesto di ricerca e didattico con necessità particolari e diverse rispetto ad 
-un ambiente di produzione che hanno portato a scelte progettuali specifiche.\\
-Le conseguenze sono, per l'appunto, che il cluster non è adatto per un utilizzo di produzione e che non sono stati implementati test di sicurezza, resilienza o performance
-come menzionato nella \Cref{sec:test-concl}.
-D'altra parte lo scopo del progetto ed il contesto in cui si inserisce non necessità di ulteriore sviluppo e sarà oggetto di futuri lavori l'espansione del progetto.
-\section{Sviluppi futuri}
-Al fine di rendere il progetto più completo e pronto per un utilizzo in produzione si possono fare i seguenti sviluppi:
-\begin{itemize}
-    \item {\textbf{Monitoraggio}: implementazione di un sistema di monitoraggio e logging (come Grafana o Prometheus) per tenere traccia dello stato del cluster, dei servizi e degli oggetti.
-    Questo permetterebbe di individuare problemi e risolverli in modo più rapido oltre che a tracciare l'utilizzo delle risorse e l'efficienza dei servizi.
-    }
-    \item{\textbf{Versatilità}: implementazione del sistema in sistemi operativi diversi da quello utilizzato in questo progetto così da rendere il cluster più versatile e favorire la compatibilità con altri sistemi.
-    }
-    \item{
-        \textbf{Resilienza}: introduzione di molteplici copie del nodo master per aumentare la resilienza del cluster. Questo comporterà l'introduzione di un load balancer per dividere il traffico tra i nodi master.
-        In più si possono introdurre più istanze di \texttt{etcd} (il database che contiene lo stato del cluster)\cite{kubernetes}.
-    }
-    \item {
-        \textbf{Ordinaria amministrazione}: assicurarsi che il cluster rimanga sicuro aggiornando i componenti e rinnovando i certificati (se deve rimanere
-        attivo per un lungo periodo di tempo), che i nodi rimangano aggiornati e con il corretto numero di risorse allocate ed introdurre un numero di efficientamenti
-        per migliorare la salute del cluster; le buone prassi per la gestione di un cluster sono introdotte nella documentazione ufficiale e dipendono dall'utilizzo che
-        si vuole fare del cluster stesso\cite{kubernetes}.
-    }
-\end{itemize}
+%
+% TODO: draft
+%
 
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
