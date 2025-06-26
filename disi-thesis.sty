@@ -56,6 +56,14 @@
 
 \def\themainlinespacing{1}
 \newcommand{\mainlinespacing}[1]{\def\themainlinespacing{#1}}
+
+% Ridefinizione di frontmatter per usare numeri romani maiuscoli
+\let\oldfrontmatter\frontmatter
+\renewcommand{\frontmatter}{
+    \oldfrontmatter
+    \renewcommand{\thepage}{\Roman{page}}
+}
+
 \let\oldmainmatter\mainmatter
 \renewcommand{\mainmatter}{
     \oldmainmatter
