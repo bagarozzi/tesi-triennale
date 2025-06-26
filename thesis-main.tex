@@ -325,10 +325,10 @@ Al fine di rendere il progetto più completo e pronto per un utilizzo in produzi
     \item {\textbf{Monitoraggio}: implementazione di un sistema di monitoraggio e logging (come Grafana o Prometheus) per tenere traccia dello stato del cluster, dei servizi e degli oggetti.
     Questo permetterebbe di individuare problemi e risolverli in modo più rapido oltre che a tracciare l'utilizzo delle risorse e l'efficienza dei servizi.
     }
-    \item{\textbf{Versatilità}: Implementazione del sistema in sistemi operativi diversi da quello utilizzato in questo progetto così da rendere il cluster più versatile e favorire la compatibilità con altri sistemi.
+    \item{\textbf{Versatilità}: implementazione del sistema in sistemi operativi diversi da quello utilizzato in questo progetto così da rendere il cluster più versatile e favorire la compatibilità con altri sistemi.
     }
     \item{
-        \textbf{Resilienza}: Introduzione di molteplici copie del nodo master per aumentare la resilienza del cluster. Questo comporterà l'introduzione di un load balancer per dividere il traffico tra i nodi master.
+        \textbf{Resilienza}: introduzione di molteplici copie del nodo master per aumentare la resilienza del cluster. Questo comporterà l'introduzione di un load balancer per dividere il traffico tra i nodi master.
         In più si possono introdurre più istanze di \texttt{etcd} (il database che contiene lo stato del cluster)\cite{kubernetes}.
     }
     \item {
