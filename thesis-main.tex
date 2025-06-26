@@ -279,7 +279,12 @@ $ curl -i -H "Host: www.animals.com" http://127.0.0.1:30900/cats
 \end{lstlisting}
 Successivamente si espone il cluster all'esterno aggiungendo una regola di port forwarding al firewall del VDC. Tramite questa si va a ridirezionare il traffico in ingresso verso
 un nodo qualsiasi del cluster, sulla porta NodePort dell'Ingress Controller.
-% foto della regola di port forwarding
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/forwarding-rule.png}
+    \caption{Regola di port forwarding nel firewall del VDC}
+    \label{fig:firewall-rule}
+\end{figure}
 Infine si verifica la disponiblità del servizio da un'altra macchina non collegata alla rete interna del VDC. 
 \begin{lstlisting}
 $ curl -i -H "Host: www.animals.com" http://gw-ingv-labdidattica.pp.ingv.it:17001/cats
