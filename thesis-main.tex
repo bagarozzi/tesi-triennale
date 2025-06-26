@@ -259,6 +259,8 @@ Qui si possono scegliere due modalità di configurazione, anche in funzione dell
         }
 \end{itemize} 
 \chapter{Testing}
+\section{Deployment di prova}
+\label{sec:test-depl}
 Per verificare il corretto funzionamento del cluster viene eseguita una semplica applicazione web stateless utilizzando NginX come server web. Il deployment consiste in due applicazioni
 posizionate su più pod che servono due pagine web distinte, come per simulare l'erogazione di due servizi diversi.
 
@@ -301,10 +303,15 @@ Visto che il dominio che utilizzato (\texttt{www.animals.com}) non è inserito i
 l'indirizzo all'header della richiesta. In questo modo quando la richiesta viene inoltrata attraverso da Ingress questo saprà quale host si sta richiedendo,
 senza questo accorgimento la richiesta arriverebbe al controller ma non verrebbe inoltrata a nessun servizio perché il campo header conterrebbe un altro dominio. 
 \lstinputlisting[float, language=bash,label={lst:output-local}, caption=Output della richiesta cUrl]{listings/test-output.txt}
+\section{Considerazioni sui test}
+Se eseguiti con successo, i test della \Cref{sec:test-depl} dimostrano una piena funzionalità del cluster nello svolgere le operazioni di base come creazione di pods, servizi e routing di Ingress.
+Tuttavia è importante osservare come questi non siano completamente esaustivi ed assoluti; sarà cura dei futuri utilizzatori e sviluppatori di questo progetto mantenere i componenti aggiornati e compatibili tra
+di loro nel caso vengano utilizzati add-ons, plugin o funzionalità aggiuntive.
+
+Inoltre, i test non coprono aspetti di sicurezza, resilienza o performance del cluster, che sono fondamentali in un ambiente di produzione. Per esempio, sarà opportuno 
+aumentare il numero di risorse allocate ai nodi ed il numero di nodi stessi nel caso si vogliano implementare servizi onerosi. 
 \chapter{Conclusione e lavori futuri}
-%
-% TODO: draft
-%
+
 
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
