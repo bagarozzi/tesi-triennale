@@ -158,7 +158,8 @@ Operando direttamente a livello dei container fornisce diversi strumenti come au
 Ciò apre ad una particolare flessibilità e possibilità di integrazione con ambienti cloud eterogenei. Non a caso, Kubernetes è fornito come servizio gestito (\textit{Platfrom-as-a-Service}) dai principali fornitori cloud tra cui: Azure Kubernetes Service (AKS), Google Kubernetes Engine (GKE), Oracle Kubernetes Engine (OKE).
 Con l'avvento dei microservizi si è affermata come una delle principali piattaforme per l'implementazione di applicazioni scalabili, resilienti e portabili, diventando un elemento chiave nello sviluppo di applicazioni cloud-native.
 \subsection{Principali componenti di Kubernetes}
-Le applicazioni containerizzate sono dispiegate su componenti detti Pods, questi ultimi sono caricati su uno o più nodi del cluster che possono essere macchine fisiche o virtuali. In ogni nodo sono installati tutti i componenti necessari per controllare i pods e tutti i nodi sono controllati dal nodo master che contiene il layer di gestione del ciclo di vita dei pods.\\
+Le applicazioni containerizzate sono dispiegate su entità chiamate Pods, questi ultimi sono assegnati ad uno o più nodi del cluster che possono essere macchine fisiche o virtuali.
+In ogni nodo sono installati tutti i componenti necessari per controllare i pods mentre l'intero cluster è controllato dal nodo master (\textit{control plane}) che coordina il ciclo di vita dei pods, lo scheduling e la configurazione complessiva del cluster.
 I principali componenti sono quindi:
 \begin{itemize}
     \item {
