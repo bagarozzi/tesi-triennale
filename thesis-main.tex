@@ -166,7 +166,8 @@ I principali componenti sono quindi:
         Nodi: macchine virtuali o fisiche dotate di tutti i componenti per la gestione dei containers. Ogni nodo contiene una container runtime (come CRI o \texttt{containerd}), \texttt{kubelet} (l'agente che gestisce localmente i Pods) ed opzionalmente \texttt{kube-proxy} che implementa una parte del networking.
     }
     \item {
-        Pods: la più piccola unità che si può dispiegare su Kubernetes. Ciascun pod contiene uno o più container, tipicamente uno oppure due se strettamente legati ed operano sugli stessi files (sidecar).
+        Pods: la più piccola unità di calcolo in Kubernetes. Ciascun pod contiene uno o più container, tipicamente uno solo oppure due se condividono le stesse risorse (es. pattern sidecar).
+        I pod sono effimeri per natura, possono essere creati e distrutti dinamicamente.
     }
     \item {
         Services: in Kubernetes le applicazioni sono distribuite ma forniscono tutte lo stesso \textit{servizio} all'utente o al cluster ed un Service è un modo per unire sotto lo stesso endpoint tutte le applicazioni.\\
