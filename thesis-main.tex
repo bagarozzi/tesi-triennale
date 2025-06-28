@@ -119,10 +119,10 @@ Vediamo elencati ora alcuni dei principali componenti di OpenStack\cite{amslaure
 \end{figure}
 \section{Cloud-Init}
 % introduzione in generale sull'infrastructure-as-code
-Una tecnologia di \textit{Infrastructure-as-Code} (IaC) con cui le istanze vengono configurate automaticamente al loro avvio installando pacchetti, scrivendo file di configurazione e inviando comandi alla shell. \\
-IaC è un approccio che automatizza la creazione e gestione dei componenti dell'infrastruttura. Favorisce la standardizzazione ed il versioning velocizzando notevolmente il lavoro degli sviluppatori.
+\textit{Infrastructure-as-Code} (IaC) è una tecnologia con cui le istanze vengono configurate automaticamente al loro avvio installando pacchetti, scrivendo file di configurazione e inviando comandi alla shell.
+Questo approccio velocizza la creazione dei componenti dell'infrastruttura rendendo il processo ripetibile, costante e scalabile favorendo la standardizzazione ed il versioning e velocizzando notevolmente il lavoro degli sviluppatori.
 
-Durante l'implementazione del VDC sono stati valutati altri applicativi per l'automazione del deployment e l'orchestrazione:
+Durante l'implementazione del VDC sono stati valutati vari applicativi per l'automazione del deployment e l'orchestrazione:
 \begin{itemize}
     \item \textbf{Heat}: il servizio integrato della suite OpenStack per orchestrare tramite template.
     \item {
@@ -136,14 +136,14 @@ Durante l'implementazione del VDC sono stati valutati altri applicativi per l'au
 
 I primi due sono soluzioni decisamente più complesse sia in termini di configurazione che di utilizzo da parte degli utenti, ma che offrono una maggiore flessiblità e potenza su larga scala.
 Tuttavia Heat non era disponibile o non correttamente configurato. La sua assenza ha reso necessaria l'adozione di una soluzione alternativa già funzionante all'interno dell'infrastruttura.
-Allo stesso tempo, Ansible, pur essendo un'ottima soluzione per la gestione di infrastrutture complesse, richiede una configurazione iniziale più complessa e non è uno strumento adatto per chi si approccia
+Allo stesso tempo, Ansible, pur essendo un'ottima soluzione per la gestione di infrastrutture virtualizzate, richiede una configurazione iniziale più complessa e non è uno strumento adatto per chi si approccia
 per la prima volta all'automazione.
 
 Quindi la scelta è ricaduta su Cloud-Init per la sua semplicità d'uso: è sufficiente allegare uno script (user-data) al momento della creazione della macchina virtuale, e questa si configura automaticamente.
 Un altro aspetto importante è che Cloud-Init opera una sola volta, al primo avvio della macchina scrive su file, configura l'istanza e installa pacchetti; non è pensato per un mantenimento a lungo termine che non è necessario,
 anzi potenzialmente dannoso in questo contesto. 
 Questo componente è già nativo di OpenStack e risulta il più semplice da utilizzare tra le alternative citate perché più agile nelle prime fasi di sviluppo e test in cui non si deve gestire deployment complessi, su larga scala o
-di produzione.
+di produzione bensì si ha bisogno di macchine virtuali pronte all'uso fin dal momento della loro creazione.
 L'obbiettivo infatti, in un contesto di didattico e sperimentale come il VDC, è quello di semplificare al massimo l'esperienza di studenti e ricercatori senza introdurre strumenti che avrebbero richiesto una curva di apprendimento
 rappresentando un ostacolo più che un valore aggiunto.
 
