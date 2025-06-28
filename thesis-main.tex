@@ -127,7 +127,6 @@ Questo componente è già nativo in OpenStack e quindi rende lo sviluppo veloce 
 del deployment e l'orchestrazione di un cluster:
 \begin{itemize}
     \item \textbf{Heat}: il servizio integrato della suite OpenStack per orchestrare tramite template, che in questo caso non era disponibile.
-    \item \textbf{Warewulf}: una piattaforma creata appositamente per il automatizzare il provisioning di cluster HPC dotato di gestione delle immagini e creazione automatica dei nodi. Molto più fluido rispetto a Heat ma non adatto per questo stato del progetto anche perché richiede una configurazione più importante delle macchine virtuali (N.B.: WareWulf esegue il provisioning mentre Heat, Ansible e Cloud-Init eseguono la configurazione della macchina quindi W.W. andrebbe utilizzato assieme a qualche altro tool di configurazione).
     \item \textbf{Ansible}: un'altra valida alternativa a Cloud-Init che permette molta più libertà ed anche la possibilità di un mantenimento continuo delle istanze. A sua volta è più complicato da configurare e richiede un ulteriore nodo master per inviare i moduli ai nodi che controlla.
 \end{itemize}
 %
