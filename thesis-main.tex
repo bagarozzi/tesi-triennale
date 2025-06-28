@@ -153,10 +153,10 @@ rappresentando un ostacolo più che un valore aggiunto.
 %
 % TODO: rileggere, andare a capo, typos, spiegazione componenti
 %
-Kubernetes è un sistema open-source per il deployment e lo scaling di applicazioni containerizzate. 
-Lavorando a livello dei container fornisce diversi tool come scaling e load balancing ma lascia agli utenti l'integrazione di logging, monitoraggio e scelta dei componenti da utilizzare.
-Ciò apre ad una particolare flessibilità e possibilità di integrazione con parecchie piattaforme cloud, infatti Kubernetes è fornito come servizio \textit{managed} (\textit{Platfrom-as-a-Service}) dai principali fornitori cloud tra cui: Azure Kubernetes Service (AKS), Google Kubernetes Engine (GKE), Oracle Kubernetes Engine (OKE).
-Con l'avvento dei microservizi è diventata una delle principali piattaforme per l'implementazione di applicazioni scalabili. 
+Kubernetes è una piattaforma open-source per il deployment, la gestione e lo scaling automatico di applicazioni containerizzate. 
+Operando direttamente a livello dei container fornisce diversi strumenti come autoscaling e bilanciamento del carico lasciando agli utenti la libertà di integrare componenti aggiuntivi per logging, monitoraggio e gestione personalizzata dell'infrastruttura.
+Ciò apre ad una particolare flessibilità e possibilità di integrazione con ambienti cloud eterogenei. Non a caso, Kubernetes è fornito come servizio gestito (\textit{Platfrom-as-a-Service}) dai principali fornitori cloud tra cui: Azure Kubernetes Service (AKS), Google Kubernetes Engine (GKE), Oracle Kubernetes Engine (OKE).
+Con l'avvento dei microservizi si è affermata come una delle principali piattaforme per l'implementazione di applicazioni scalabili, resilienti e portabili, diventando un elemento chiave nello sviluppo di applicazioni cloud-native.
 \subsection{Principali componenti di Kubernetes}
 Le applicazioni containerizzate sono dispiegate su componenti detti Pods, questi ultimi sono caricati su uno o più nodi del cluster che possono essere macchine fisiche o virtuali. In ogni nodo sono installati tutti i componenti necessari per controllare i pods e tutti i nodi sono controllati dal nodo master che contiene il layer di gestione del ciclo di vita dei pods.\\
 I principali componenti sono quindi:
