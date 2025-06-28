@@ -180,8 +180,9 @@ I principali componenti sono quindi:
         È sempre necessario un Ingress Controller per applicare le regole di routing, questo può essere scelto dall'utente (come NginX o Traefik) o viene fornito dal cloud provider come nel caso di AKS, GKE o OKE. 
     }
     \item {
-        Autoscaling: HPA ed Autoscalers sono componenti che permettono lo scaling orizzontale (aumentando il numero di Pods) o verticale aumentando il numero di Pods al fine di mantenere entro una certa soglia l'utilizzo delle risorse.\\
-        Kubernetes è in grado di comunicare, attraverso plugin come Autoscaler o Karpenter, con i Cloud Providers al fine di eliminare o aggiungere risorse al cluster in base alle necessità ed alle limitazioni. Per esempio potrebbero essere necessari più nodi per i Pod in scheduling oppure rimuovere nodi per abbassare i costi e \textit{consolidare} il cluster.
+        Autoscaling: Kubernetes permette lo scaling orizzontale (aumentando il numero di Pods) o verticale (aumentando le risorse assegnate) al fine di mantenere entro una certa soglia l'utilizzo delle risorse,
+        utilizzando componenti come Horizontal Pod Autoscaler (HPA) o strumenti di autoscaling esterni come Karpenter. 
+        In ambienti cloud, Kubernetes è in grado di comunicare con il provider al fine di creare o rimuovere nodi dinamicamente ottimizzando costi e prestazioni.
     }
     \item {
         Storage: la gestione dello storage a lungo e corto termine. Viene fatto per mezzo di diversi componenti come volumi, volumi persistenti o ConfigMaps.
