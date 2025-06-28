@@ -170,9 +170,9 @@ I principali componenti sono quindi:
         I pod sono effimeri per natura, possono essere creati e distrutti dinamicamente.
     }
     \item {
-        Services: in Kubernetes le applicazioni sono distribuite ma forniscono tutte lo stesso \textit{servizio} all'utente o al cluster ed un Service è un modo per unire sotto lo stesso endpoint tutte le applicazioni.\\
-        Questo componente permette di gestire la natura effimera dei Pods che possono essere creati e distrutti a runtime quindi l'utente farebbe particolare fatica a tenere traccia dei loro indirizzi.\\
-        Fa anche da Load Balancer per distribuire il traffico tra i vari Pods.
+        Services: un oggetto che astrae l'accesso ad un insieme di pod permettendo di esporli tramite un unico endpoint.
+        Questo componente permette di gestire la natura effimera dei pod menzionata al punto precedente, evitando che l'utente debba conoscere l'indirizzo IP di ogni pod.
+        Inoltre, fungono anche da Load Balancer interno per distribuire il traffico tra i vari pod.
     }
     \item {
         Ingress: è un servizio di rete che permette di smistare il traffico in base alle regole indicate dall'utente. Questo permette di erogare diversi servizi provenienti da diversi gruppi di Pods dallo stesso endpoint.\\
