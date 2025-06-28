@@ -175,9 +175,9 @@ I principali componenti sono quindi:
         Inoltre, fungono anche da Load Balancer interno per distribuire il traffico tra i vari pod.
     }
     \item {
-        Ingress: è un servizio di rete che permette di smistare il traffico in base alle regole indicate dall'utente. Questo permette di erogare diversi servizi provenienti da diversi gruppi di Pods dallo stesso endpoint.\\
-        È componente molto potente in quanto può fare da Load Balancer e come terminazione SSL/TLS; queste caratteristiche riducono la necessità di load balancer nel cluster e permette comunicazioni più snelle in quanto il protocollo di sicurezza viene terminato prima dell'ingresso dei pacchetti nel cluster.\\
-        È sempre necessario un Ingress Controller per applicare le regole di routing, questo può essere scelto dall'utente o viene fornito dal cloud provider come nel caso di AKS, GKE o OKE. 
+        Ingress: è un servizio di rete che permette di smistare il traffico HTTP/HTTPS in base alle regole indicate dall'utente. Questo permette di erogare diversi servizi provenienti da diversi gruppi di pod dallo stesso endpoint.\\
+        È un componente molto potente in quanto può fare da da terminatore SSL/TLS e Load Balancer, riducendo la necessità di configurarne uno esterno.
+        È sempre necessario un Ingress Controller per applicare le regole di routing, questo può essere scelto dall'utente (come NginX o Traefik) o viene fornito dal cloud provider come nel caso di AKS, GKE o OKE. 
     }
     \item {
         Autoscaling: HPA ed Autoscalers sono componenti che permettono lo scaling orizzontale (aumentando il numero di Pods) o verticale aumentando il numero di Pods al fine di mantenere entro una certa soglia l'utilizzo delle risorse.\\
