@@ -69,10 +69,15 @@ Il progetto Nereide (NEw REsearch Infrastructure Datacenter for EMSO), sviluppat
 Esso fornisce VDC basati su tecnologie OpenStack e Ceph, offrendo risorse computazionali e di storage scalabili e sicure.
 Nereide è progettato per accelerare i flussi di lavoro della data science, in particolare in ambito marino, sostenendo i principi FAIR (Findable, Accessible, Interoperable, Reusable) e l'integrazione con ecosistemi federati come Blue-Cloud e il Digital Twin of the Ocean\cite{cacciaguerra2024vdc}.
 
-% Introduzione alla necessità di installare servizi da zero. 
-Il problema introdotto dalla creazione dei VDC è la necessità di installare e configurare da zero i servizi che le piattaforme cloud offrono come \textit{managed} come Slurm, JupyterLab e Kubernetes. 
-Da qui l'obiettivo specifico di questo progetto, che è la realizzazione di script Infrastructure-as-Code (IaC) che permettano la creazione automatizzata di cluster Kubernetes all'interno dei VDC di Nereide.
-Questo approccio consente la definizione e il deploy di ambienti complessi tramite codice versionato e ripetibile, riducendo drasticamente il carico operativo per gli utenti finali e favorendo la riproducibilità della ricerca.
+% Introduzione alla necessità di installare servizi da zero e l'obbiettivo del progetto
+Tuttavia, la gestione di un VDC, sebbene sia semplificata rispetto a quella di un data center fisico, non include nativamente strumenti gestiti per il calcolo distribuito
+e l'elaborazione dei dati. Questo progetto nasce dalla necessità di installare e configurare da zero servizi come Slurm, JupyterLab e Kubernetes creando uno stack automatizzato
+basato su strumenti di Infrastructure-as-Code (IaC).
+
+L'obiettivo del progetto è dunque quello di abilitare la creazione automatica e ripetibile di ambienti di calcolo avanzati, utilizzando tecnologie come Cloud-Init,
+scripting Bash e componenti Kubernetes, con un focus specifico sul contesto didattico e prototipale. 
+Questa scelta consente di offrire a studenti, ricercatori e tecnologi un laboratorio digitale accessibile e immediatamente operativo, facilitando la formazione,
+la sperimentazione e l'evoluzione di idee progettuali, senza i vincoli tecnici delle infrastrutture fisiche.
 
 % Riflessione sull'uso di cluster su infrastrutture virtualizzate.
 Una riflessione importante riguarda il posizionamento di cluster come Kubernetes o Slurm su infrastrutture virtualizzate anziché fisiche.
