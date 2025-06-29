@@ -60,7 +60,7 @@ l'Istituto Nazionale di Geofisica e Vulcanologia (INGV) ha sviluppato la piattaf
 un'infrastruttura virtualizzata avanzata al servizio della comunità scientifica.
 Al centro di questa piattaforma vi è il concetto di Virtual Data Center (VDC): 
 un ambiente cloud dinamico, personalizzabile e sicuro, dove data scientist o team di ricerca possono gestire in autonomia risorse computazionali virtuali come
-macchine virtuali, reti e servizi, mantenendo al contempo una separazione netta dalla gestione fisica dell'infrastruttura, affidata agli amministratori di sistema.
+macchine virtuali, reti e servizi, mantenendo al contempo una separazione netta dalla gestione fisica dell'infrastruttura, affidata agli amministratori di sistema (v. \Cref{sec:vdc}).
 
 Questa visione consente di ridurre la dipendenza da fornitori cloud commerciali, offrendo ambienti flessibili e scalabili, ottimizzati per il ciclo di vita della ricerca scientifica,
 e facilmente integrabili con ecosistemi federati come Blue-Cloud o il Digital Twin of the Ocean.
@@ -90,7 +90,32 @@ codice; inoltre si riduce la dipendenza da istituzioni esterne e da lunghi proce
 Questa tesi, realizzata all'interno dei laboratori didattici di NEREIDE, intende contribuire a questa nuova visione dell'infrastruttura per la ricerca,
 mostrando come l'automazione e la standardizzazione possano trasformare un ambiente virtuale in una vera e propria piattaforma di innovazione tecnica e scientifica.
 
-% Section: Virtual Data Center
+\section{Virtual Data Center}
+\label{sec:vdc}
+Nel panorama attuale della ricerca scientifica e della formazione tecnologica, l'adozione di infrastrutture cloud rappresenta una svolta fondamentale.
+In questo contesto, i Virtual Data Center (VDC) emergono come strumenti strategici, in grado di offrire agli utenti ambienti di lavoro avanzati,
+flessibili e completamente personalizzabili, capaci di replicare tutte le funzionalità di un data center fisico, ma in forma completamente virtualizzata e software-defined.
+
+Un VDC è, a tutti gli effetti, un ambiente cloud isolato dove utenti come studenti, data scientist, sviluppatori o gruppi di ricerca possono creare,
+configurare e gestire in autonomia risorse fondamentali per le attività di calcolo e analisi.
+Tra queste risorse troviamo macchine virtuali (VM), reti virtuali complete di firewall, VPN e configurazioni di routing, sistemi di storage distribuito per dati a blocchi,
+a oggetti o file, e infine piattaforme containerizzate come Kubernetes. Tutto questo avviene dietro un gateway dedicato con indirizzo IP pubblico, che permette l'accesso remoto sicuro, mantenendo al tempo stesso l'isolamento dell'ambiente.
+
+Nel caso della piattaforma NEREIDE, sviluppata dall'INGV, i VDC sono costruiti utilizzando OpenStack come tecnologia IaaS (Infrastructure-as-a-Service) per la gestione delle risorse computazionali, e Ceph come sistema di storage distribuito.
+Questa architettura consente di lavorare in ambienti completamente replicabili, scalabili e autonomi, senza che gli utenti debbano preoccuparsi della gestione dell'hardware fisico sottostante.
+In sostanza, ogni VDC diventa un vero e proprio data center “su misura”, modellato sulle esigenze specifiche di un progetto o di un gruppo di lavoro.
+
+Questa configurazione offre molteplici vantaggi rispetto a un'infrastruttura fisica tradizionale. Innanzitutto, la flessibilità: la possibilità di attivare o disattivare rapidamente risorse in base ai bisogni.
+Poi l'isolamento, che garantisce sicurezza e indipendenza tra progetti diversi. C'è anche la possibilità di integrare strumenti avanzati — come JupyterHub, ElasticSearch, o sistemi di orchestrazione come Ansible e Terraform — attraverso approcci Infrastructure-as-Code (IaC).
+Inoltre, la configurazione degli ambienti può essere versionata, ripetibile e documentata, favorendo la riproducibilità scientifica, oggi considerata un pilastro nella ricerca moderna.
+
+In questo quadro tecnologico, i laboratori didattici basati su VDC assumono un ruolo chiave per la formazione dei nuovi tecnologi. Consentono infatti agli studenti di operare in un ambiente professionale realistico,
+dove possono sperimentare direttamente con strumenti all'avanguardia, applicare in modo pratico le nozioni teoriche, e acquisire competenze concrete in ambiti come cloud computing, data science e DevOps.
+Ogni studente dispone di un proprio VDC personale, dove può svolgere attività complesse in piena autonomia ma in un contesto controllato e sicuro, con il supporto di tutor esperti. 
+Questo modello formativo si adatta perfettamente alle esigenze dell'istruzione moderna: accessibile da remoto, flessibile nei tempi, e capace di fornire una preparazione solida e attuale, perfettamente in linea con le richieste del mondo della ricerca e del lavoro.
+
+In conclusione, un VDC non è solo uno strumento tecnologico: è una piattaforma abilitante per l'innovazione, la sperimentazione e l'apprendimento, che rende possibile costruire ambienti complessi, avanzati e collaborativi, senza dover disporre di un'infrastruttura fisica.
+In ambito accademico, e in particolare nei laboratori didattici NEREIDE, questo significa offrire agli studenti l'opportunità di formarsi sul campo, utilizzando tecnologie reali e affrontando sfide concrete, preparandoli in modo efficace a diventare i protagonisti della trasformazione digitale nel mondo scientifico e industriale.
 
 \section{Struttura del documento}
 In questo documento verranno prima presentati i componenti utilizzati per la realizzazione del progetto, in particolare OpenStack e Kubernetes, e le tecnologie di automazione come Cloud-Init.
