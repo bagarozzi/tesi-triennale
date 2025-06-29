@@ -188,6 +188,7 @@ I principali componenti sono quindi:
         In ambienti cloud, Kubernetes è in grado di comunicare con il provider al fine di creare o rimuovere nodi dinamicamente ottimizzando costi e prestazioni.
     }
     \item {
+        % TODO
         Storage: la gestione dello storage a lungo e corto termine. Viene fatto per mezzo di diversi componenti come volumi, volumi persistenti o ConfigMaps.
     }
 \end{itemize}
@@ -213,6 +214,10 @@ Il plugin deve essere conforme con la \textit{Container Network Interface} (CNI)
 \textit{Calico}.
 %
 \chapter{Implementazione}
+% Introduzione al capitolo
+In questo capitolo si affronterà l'implementazione effettiva del cluster a partire dal provisioning delle macchine che viene eseguito tramite interfaccia grafica
+per poi passare alla configurazione delle macchine tramite Cloud-Init. Infine verrà affrontata la creazione del cluster, esponendo diverse alternative per il \textit{join}
+di tutti i nodi.
 \section{Provisioning delle macchine}
 Le macchine virtuali vengono create tramite l'interfaccia grafica di OpenStack (Horizon). Viene scelto di allocare diverse risorse ai nodi, precisamente: 
 \begin{itemize}
@@ -253,6 +258,7 @@ Un cluster composto da un nodo master e tre nodi worker sarà composto come in \
     \label{fig:kube-cluster}
 \end{figure}
 \section{Creazione del cluster}
+\label{sec:cluster-creation}
 La fase successiva è quella di integrazione dei nodi worker nel cluster. Questa operazione non è completamente automatizzabile in quanto utilizzando
 l'interfaccia grafica in congiunzione con \texttt{kubeadm} è necessario reperire un token di autenticazione che poi va inserito nei nodi worker.\\
 Questo token viene generato dal nodo master e non è conosciuto a priori.\\
@@ -266,6 +272,9 @@ Nel secondo caso viene implementato uno script bash che esegue l'operazione in a
 Questo script deve essere eseguito mentre si è connessi alla rete VPN che permette l'accesso al VDC dal proprio terminale, in più bisogna scrivere su un file di testo l'indirizzo IP del nodo master e dei nodi worker.
 Successivamente lo script si occuperà di leggere il file e di eseguire i comandi necessari per l'integrazione dei nodi worker (v. \Cref{lst:join-script}).
 \lstinputlisting[float, language=bash, label={lst:join-script}, caption=Script di integrazione dei nodi worker]{listings/join-nodes.sh}
+
+Un'altra alternativa per la creazione del cluster può essere quella di utilizzare l'interfaccia in linea di comando di OpenStack, ma al momento non è possibile farlo 
+in quanto è uno strumento disponibibile per gli amministratori. Questo viene comunque diffuso negli sviluppi futuri del progetto alla \Cref{sec:future}.
 \subsection{Configurazione di un controller Ingress}
 \label{sec:ingress}
 Infine viene installato l'Ingress Controller, per questa implementazione è stato scelto \textit{NginX Ingress Controller}. Questo componente è solitamente
@@ -344,8 +353,9 @@ Bisogna osservare che il progetto è stato sviluppato in un contesto di ricerca 
 un ambiente di produzione che hanno portato a scelte progettuali specifiche.\\
 Le conseguenze sono, per l'appunto, che il cluster non è adatto per un utilizzo di produzione e che non sono stati implementati test di sicurezza, resilienza o performance
 come menzionato nella \Cref{sec:test-concl}.
-D'altra parte lo scopo del progetto ed il contesto in cui si inserisce non necessità di ulteriore sviluppo e sarà oggetto di futuri lavori l'espansione del progetto.
+D'altra parte lo scopo del progetto ed il contesto in cui si inserisce non necessita di ulteriore sviluppo e sarà oggetto di futuri lavori l'espansione del progetto.
 \section{Sviluppi futuri}
+\label{sec:future}
 Al fine di rendere il progetto più completo e pronto per un utilizzo in produzione si possono fare i seguenti sviluppi:
 \begin{itemize}
     \item {\textbf{Monitoraggio}: implementazione di un sistema di monitoraggio e logging (come Grafana o Prometheus) per tenere traccia dello stato del cluster, dei servizi e degli oggetti.
@@ -364,6 +374,11 @@ Al fine di rendere il progetto più completo e pronto per un utilizzo in produzi
         si vuole fare del cluster stesso\cite{kubernetes}.
     }
 \end{itemize}
+% conclusioni implementative: non so ancora se metterla qui oppure direttamente nella sezione riguardante la creazione del cluster.
+% Anche se effettivamente è uno sviluppo futuro e non era un alternativa fattibile, magari posso menzionarla. 
+Per ottenere il massimo livello automazione sarebbe preferibile disporre dello strumento in riga di comando di OpenStack, che se integrato con script bash, renderebbe 
+più veloce sia il provisioning (sarebbe sufficiente un comando unico per creare tutte le macchine) sia l'integrazione dei nodi nel cluster tramite il recupero del token come indicato
+alla \Cref{sec:cluster-creation}.
 
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
