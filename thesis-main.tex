@@ -417,8 +417,9 @@ di loro nel caso vengano utilizzati add-ons, plugin o funzionalità aggiuntive.
 
 % tutte le caratteristiche che uno può gestire dipendono da quello che vuoi fare in futuro: sicurezza è fatta dal VDC, performance dipendono dalla macchina che hai sotto e dallo scaling. 
 %
-Inoltre, i test non coprono aspetti di sicurezza, resilienza o performance del cluster, che sono fondamentali in un ambiente di produzione. Per esempio, sarà opportuno 
+Inoltre, i test non coprono aspetti di performance del cluster, che sono fondamentali in un ambiente di produzione. Per esempio, sarà opportuno 
 aumentare il numero di risorse allocate ai nodi ed il numero di nodi stessi nel caso si vogliano implementare servizi onerosi. 
+Per quanto riguarda la sicurezza, questa è garantita dal VDC stesso che implementa un firewall e regole che limitano l'accesso alle macchine virtuali dall'esterno.
 %
 \chapter{Conclusione e lavori futuri}
 Sono stati raggiunti tutti gli obiettivi prefissati, permettendo la creazione automatizzata di un cluster Kubernetes su un VDC OpenStack.
