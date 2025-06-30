@@ -274,7 +274,13 @@ Le macchine virtuali vengono create tramite l'interfaccia grafica di OpenStack (
 \end{itemize}
 Chiaramente queste risorse sono relative al carico di lavoro che il cluster deve affrontare, nel caso si attenda un lavoro più intenso o si stia progettando per un ambiente di produzione
 si può decidere di avviare le macchine già con più risorse a disposizione.
-
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/vm-nereide.png}
+    \caption{Provisioning delle macchine virtuali su Nereide}
+    \label{fig:kube-vm-provisioning}
+\end{figure}
+\FloatBarrier
 Inoltre in ambienti di produzione è opportuno distribuire i componenti di controllo del cluster (\textit{control plane}) su più nodi master. In questo caso ciascun nodo master eseguirà un'istanza
 di ciascun componente e le API verranno esposte al resto del cluster attraverso un load balancer che bilancerà il carico nei vari nodi master (v. \Cref{fig:kube-ha-topo}). È indicato distribuire i nodi in diversi datacenter 
 (chiamati negli ambienti cloud \textit{availability zones}) per mitigare il rischio di interruzione dei servizi\cite{kubernetes}.
@@ -285,7 +291,8 @@ di ciascun componente e le API verranno esposte al resto del cluster attraverso 
     \caption{Possibile architettura di un cluster Kubernetes ad alta disponibilità}
     \label{fig:kube-ha-topo}
 \end{figure}
-%
+%\
+\FloatBarrier
 \section{Configurazione ed installazione dei pacchetti}
 Cloud-Init si occupa dell'installazione e configurazione preliminare dei nodi, in particolare:
 \begin{itemize}
