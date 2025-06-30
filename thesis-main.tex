@@ -304,7 +304,9 @@ Cloud-Init si occupa dell'installazione e configurazione preliminare dei nodi, i
     \item l'installazione del plugin CNI \textit{Calico} per la gestione della rete
     \item infine, l'avvio del cluster
 \end{itemize}
-Un cluster composto da un nodo master e tre nodi worker sarà composto come in \Cref{fig:kube-cluster}. Ovviamente l'architettura del cluster cambia in base all'ambiente in cui viene disposto.
+Un cluster composto da un nodo master e tre nodi worker sarà composto come in \Cref{fig:kube-cluster}. Tutti i nodi sono inseriti nella rete interna del VDC ed un gateway permette l'accesso
+dall'esterno del cluster sia per il controllo delle macchine sia per l'accesso ai servizi.\\
+Ovviamente l'architettura del cluster cambia in base all'ambiente in cui viene disposto.
 \begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/kube-vdc.png}
@@ -336,6 +338,9 @@ Questo aspetto viene affrontato anche negli sviluppi futuri del progetto alla \C
 Infine viene installato l'Ingress Controller, per questa implementazione è stato scelto \textit{NginX Ingress Controller}. Questo componente è solitamente
 incluso nel servizio di Kubernetes dei cloud provider ma in questo caso è necessario comportarsi come se si stesse lavorando su macchine fisiche usando la 
 versione \textbf{bare-metal} del controller.\\
+Infatti nelle implementazioni su cloud, il controller funge anche da Load Balancer per l'accesso al cluster ed esso collabora con il servizio che espone il cluster all'esterno
+mentre nel VDC è il gateway a gestire l'accesso ed il resto dell'infrastruttura a gestire il bilanciamento del carico. Questa configurazione costringe il controller ad assumere 
+un ruolo diverso, ovvero quello di gestire il traffico all'interno del cluster.
 Qui si possono scegliere due modalità di configurazione, anche in funzione delle operazioni che si vorranno svolgere nel cluster\cite{nginx-ingress-controller}:
 \begin{itemize}
     \item \textbf{Utilizzo di MetalLB}: una soluzione unicamente software che permette l'utilizzo di load balancer anche in ambienti che non ne implementano.
