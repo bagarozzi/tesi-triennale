@@ -352,6 +352,7 @@ Qui si possono scegliere due modalità di configurazione, anche in funzione dell
 % qualche reference a port forwarding.
 \chapter{Testing}
 \section{Deployment di prova}
+\subsection{Architettura di test}
 \label{sec:test-depl}
 Per verificare il corretto funzionamento del cluster viene eseguita una semplice applicazione web stateless utilizzando NginX come server web. Il deployment consiste in due applicazioni
 posizionate su più pod che servono due pagine web distinte, come per simulare l'erogazione di due servizi diversi.
@@ -365,6 +366,18 @@ con le modalità menzionate alla \Cref{sec:ingress}, instradando il traffico ver
     \label{fig:test-deployment}
 \end{figure}
 \FloatBarrier
+\subsection{Architettura all'interno del VDC}
+Dal punto di vista del VDC, l'aspetto del cluster sarà come in \Cref{fig:test-vdc}. Le richieste HTTP possono essere inoltrate al cluster tramite uno qualsiasi dei nodi,
+coerentemente alla modalità di esposizione scelta per l'Ingress Controller, alla porta scelta per il NodePort. Si potrà quindi scegliere un qualsiasi nodo del cluster 
+da esporre tramite il firewall del VDC.
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/test-vdc.png}
+    \caption{Schema del cluster all'interno del VDC (la distribuzione dei pod sui nodi è un esempio)}
+    \label{fig:test-vdc}
+\end{figure}
+\FloatBarrier
+\subsection{Esecuzione del test}
 Il deployment viene applicato tramite i seguenti comandi:
 \begin{lstlisting}
 $ git clone https://github.com/bagarozzi/minikube-examples.git examples
@@ -380,7 +393,7 @@ Ora è possibile verificare il funzionamento in locale tramite \texttt{curl}. Il
 $ curl -i -H "Host: www.animals.com" http://127.0.0.1:30900/cats
 \end{lstlisting}
 Successivamente si espone il cluster all'esterno aggiungendo una regola di port forwarding al firewall del VDC. Tramite questa si va a ridirezionare il traffico in ingresso verso
-un nodo qualsiasi del cluster, sulla porta NodePort dell'Ingress Controller.
+un nodo qualsiasi del cluster (master incluso), sulla porta NodePort dell'Ingress Controller.
 \begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/forwarding-rule.png}
