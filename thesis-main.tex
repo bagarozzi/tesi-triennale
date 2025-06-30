@@ -305,7 +305,10 @@ Cloud-Init si occupa dell'installazione e configurazione preliminare dei nodi, i
         \lstinputlisting[language=bash,label={lst:systemd-cgroup}, firstline=40, lastline=40]{listings/master.yaml}
     }
     \item l'installazione del plugin CNI \textit{Calico} per la gestione della rete
-    \item infine, l'avvio del cluster
+    \item {
+        infine, l'avvio del cluster
+        \lstinputlisting[language=bash,label={lst:systemd-cgroup}, firstline=54, lastline=54]{listings/master.yaml}
+    }
 \end{itemize}
 Un cluster composto da un nodo master e tre nodi worker sarà composto come in \Cref{fig:kube-cluster}. Tutti i nodi sono inseriti nella rete interna del VDC ed un gateway permette l'accesso
 dall'esterno del cluster sia per il controllo delle macchine sia per l'accesso ai servizi.\\
