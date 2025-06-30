@@ -148,10 +148,22 @@ Vediamo elencati ora alcuni dei principali componenti di OpenStack\cite{amslaure
     \caption{Schema di un Virtual Data Center}
     \label{fig:vdc}
 \end{figure}
-\section{Cloud-Init}
+\section{Strumenti di Infrastructure-as-Code}
 % introduzione in generale sull'infrastructure-as-code
 \textit{Infrastructure-as-Code} (IaC) è una tecnologia con cui le istanze vengono configurate automaticamente al loro avvio installando pacchetti, scrivendo file di configurazione e inviando comandi alla shell.
-Questo approccio velocizza la creazione dei componenti dell'infrastruttura rendendo il processo ripetibile, costante e scalabile favorendo la standardizzazione ed il versioning e velocizzando notevolmente il lavoro degli sviluppatori.
+Questo approccio porta diversi vantaggi allo sviluppo di infrastrutture:
+\begin{itemize}
+    \item{
+        \textbf{Ripetibilità e coerenza}: l'utilizzo di un singolo script garantisce che ogni istanza sia configurata alla stessa maniera,
+        riducendo il rischio di errori umani e garantendo coerenza.
+    }
+    \item{
+        \textbf{Scalabilità}: l'automazione permette di scalare più rapidamente l'infrastruttura creando nuove istanze con la stessa configurazione.
+    }
+    \item{
+        \textbf{Controllo versione}: gli script di configurazione possono essere versionati esattamente come il codice sorgente favorendo la tracciabilità delle modifiche e facilitando il rollback in caso di problemi.
+    }
+\end{itemize}
 
 Durante l'implementazione del VDC sono stati valutati vari applicativi per l'automazione del deployment e l'orchestrazione:
 \begin{itemize}
@@ -305,6 +317,7 @@ Successivamente lo script si occuperà di leggere il file e di eseguire i comand
 
 Un'altra alternativa per la creazione del cluster può essere quella di utilizzare l'interfaccia in linea di comando di OpenStack, ma al momento non è possibile farlo 
 in quanto è uno strumento disponibibile per gli amministratori. Questo viene comunque diffuso negli sviluppi futuri del progetto alla \Cref{sec:future}.
+% deve sembrare pi\ importante, non un alternativa piccola
 \subsection{Configurazione di un controller Ingress}
 \label{sec:ingress}
 Infine viene installato l'Ingress Controller, per questa implementazione è stato scelto \textit{NginX Ingress Controller}. Questo componente è solitamente
@@ -323,6 +336,8 @@ Qui si possono scegliere due modalità di configurazione, anche in funzione dell
         In questo progetto è stata scelta questa modalità sia per motivi di semplicità nel testing sia perché il contesto non permette l'utilizzo di MetalLB.
     }
 \end{itemize} 
+% comportarsi come se ingress fosse su una macchina fisica. includere che su cloud provider è già incluso. c'è il gateway su VDC. approccio migliore è bare metal come se fosse una macchina fisica.
+% qualche reference a port forwarding.
 \chapter{Testing}
 \section{Deployment di prova}
 \label{sec:test-depl}
@@ -371,9 +386,11 @@ senza questo accorgimento la richiesta arriverebbe al controller ma non verrebbe
 \section{Considerazioni sui test}
 \label{sec:test-concl}
 Se eseguiti con successo, i test della \Cref{sec:test-depl} dimostrano una piena funzionalità del cluster nello svolgere le operazioni di base come creazione di pods, servizi e routing di Ingress.
-Tuttavia è importante osservare come questi non siano completamente esaustivi ed assoluti; sarà cura dei futuri utilizzatori e sviluppatori di questo progetto mantenere i componenti aggiornati e compatibili tra
+Tuttavia è importante osservare come questi non siano completamente esaustivi e siano un primo passo per dimostrare la fattibilità ed il funzionamento del sistema; sarà cura dei futuri utilizzatori e sviluppatori di questo progetto mantenere i componenti aggiornati e compatibili tra
 di loro nel caso vengano utilizzati add-ons, plugin o funzionalità aggiuntive.
 
+% tutte le caratteristiche che uno può gestire dipendono da quello che vuoi fare in futuro: sicurezza è fatta dal VDC, performance dipendono dalla macchina che hai sotto e dallo scaling. 
+%
 Inoltre, i test non coprono aspetti di sicurezza, resilienza o performance del cluster, che sono fondamentali in un ambiente di produzione. Per esempio, sarà opportuno 
 aumentare il numero di risorse allocate ai nodi ed il numero di nodi stessi nel caso si vogliano implementare servizi onerosi. 
 %
@@ -381,6 +398,11 @@ aumentare il numero di risorse allocate ai nodi ed il numero di nodi stessi nel 
 Sono stati raggiunti tutti gli obiettivi prefissati, permettendo la creazione automatizzata di un cluster Kubernetes su un VDC OpenStack.
 Bisogna osservare che il progetto è stato sviluppato in un contesto di ricerca e didattico con necessità particolari e diverse rispetto ad 
 un ambiente di produzione che hanno portato a scelte progettuali specifiche.\\
+% Ricominici un po dalla conclusiobne: "è stato creato un ambiente che permette a studenti e ricercato di creare servizi in un VDC, è stato creato funziona" 
+% "lo scopo della tesi era qeullo di dimostrare che IAC funziona e creare implementazione di kubernetes"
+% installata ed eseguita in pochi minuti e le risorse possono essere allocate altrettanto velocemente. questo permette di avere l'infrastruttura dinamica.
+% in particolare è stato disposto un servizio di test per verificare sicurezza, scalabilità (versione ridotta della conclusione del capitolo precedente.)
+% ora è pronta per ospitare data service più complessi. è comunque onere del DS sviluppare il resto dei servizi che vuole erogare. 
 Le conseguenze sono, per l'appunto, che il cluster non è adatto per un utilizzo di produzione e che non sono stati implementati test di sicurezza, resilienza o performance
 come menzionato nella \Cref{sec:test-concl}.
 D'altra parte lo scopo del progetto ed il contesto in cui si inserisce non necessita di ulteriore sviluppo e sarà oggetto di futuri lavori l'espansione del progetto.
@@ -388,7 +410,7 @@ D'altra parte lo scopo del progetto ed il contesto in cui si inserisce non neces
 \label{sec:future}
 Al fine di rendere il progetto più completo e pronto per un utilizzo in produzione si possono fare i seguenti sviluppi:
 \begin{itemize}
-    \item {\textbf{Monitoraggio}: implementazione di un sistema di monitoraggio e logging (come Grafana o Prometheus) per tenere traccia dello stato del cluster, dei servizi e degli oggetti.
+    \item {\textbf{Monitoraggio}: implementazione di un sistema di monitoraggio e logging (come Grafana e Prometheus) per tenere traccia dello stato del cluster, dei servizi e degli oggetti.
     Questo permetterebbe di individuare problemi e risolverli in modo più rapido oltre che a tracciare l'utilizzo delle risorse e l'efficienza dei servizi.
     }
     \item{\textbf{Versatilità}: implementazione del sistema in sistemi operativi diversi da quello utilizzato in questo progetto così da rendere il cluster più versatile e favorire la compatibilità con altri sistemi.
@@ -409,6 +431,9 @@ Al fine di rendere il progetto più completo e pronto per un utilizzo in produzi
 Per ottenere il massimo livello automazione sarebbe preferibile disporre dello strumento in riga di comando di OpenStack, che se integrato con script bash, renderebbe 
 più veloce sia il provisioning (sarebbe sufficiente un comando unico per creare tutte le macchine) sia l'integrazione dei nodi nel cluster tramite il recupero del token come indicato
 alla \Cref{sec:cluster-creation}.
+% horizon dovrebbe mettere la CLI anche agli utenti finali per creare più facilmente script che orchestrano il cloud-init ed il cluster.
+% potrebbe giustificare il fatto che in futuro si fa anche in INGV.
+% spiegarlo come in capitolo su implementazione ma in chiave futuro. 
 
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
