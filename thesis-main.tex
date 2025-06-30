@@ -414,9 +414,6 @@ senza questo accorgimento la richiesta arriverebbe al controller ma non verrebbe
 Se eseguiti con successo, i test della \Cref{sec:test-depl} dimostrano una piena funzionalità del cluster nello svolgere le operazioni di base come creazione di pods, servizi e routing di Ingress.
 Tuttavia è importante osservare come questi non siano completamente esaustivi e siano un primo passo per dimostrare la fattibilità ed il funzionamento del sistema; sarà cura dei futuri utilizzatori e sviluppatori di questo progetto mantenere i componenti aggiornati e compatibili tra
 di loro nel caso vengano utilizzati add-ons, plugin o funzionalità aggiuntive.
-
-% tutte le caratteristiche che uno può gestire dipendono da quello che vuoi fare in futuro: sicurezza è fatta dal VDC, performance dipendono dalla macchina che hai sotto e dallo scaling. 
-%
 Inoltre, i test non coprono aspetti di performance del cluster, che sono fondamentali in un ambiente di produzione. Per esempio, sarà opportuno 
 aumentare il numero di risorse allocate ai nodi ed il numero di nodi stessi nel caso si vogliano implementare servizi onerosi. 
 Per quanto riguarda la sicurezza, questa è garantita dal VDC stesso che implementa un firewall e regole che limitano l'accesso alle macchine virtuali dall'esterno.
