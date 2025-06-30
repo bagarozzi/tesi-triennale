@@ -419,14 +419,14 @@ aumentare il numero di risorse allocate ai nodi ed il numero di nodi stessi nel 
 Per quanto riguarda la sicurezza, questa è garantita dal VDC stesso che implementa un firewall e regole che limitano l'accesso alle macchine virtuali dall'esterno.
 %
 \chapter{Conclusione e lavori futuri}
-Sono stati raggiunti tutti gli obiettivi prefissati, permettendo la creazione automatizzata di un cluster Kubernetes su un VDC OpenStack.
-Bisogna osservare che il progetto è stato sviluppato in un contesto di ricerca e didattico con necessità particolari e diverse rispetto ad 
-un ambiente di produzione che hanno portato a scelte progettuali specifiche.\\
-% Ricominici un po dalla conclusiobne: "è stato creato un ambiente che permette a studenti e ricercato di creare servizi in un VDC, è stato creato funziona" 
-% "lo scopo della tesi era qeullo di dimostrare che IAC funziona e creare implementazione di kubernetes"
-% installata ed eseguita in pochi minuti e le risorse possono essere allocate altrettanto velocemente. questo permette di avere l'infrastruttura dinamica.
-% in particolare è stato disposto un servizio di test per verificare sicurezza, scalabilità (versione ridotta della conclusione del capitolo precedente.)
-% ora è pronta per ospitare data service più complessi. è comunque onere del DS sviluppare il resto dei servizi che vuole erogare. 
+Lo scopo di questo progetto era quello di verificare la fattibilità dell'automazione di un cluster Kubernetes su un VDC. 
+E' stato dimostrato il provisioning e la configurazione automatica delle macchine virtuali tramite script bash e Cloud-Init, che in pochi minuti permettono di 
+avere un cluster Kubernetes funzionante e pronto per l'uso.\\
+Questo permette ancora una volta di portare avanti quello che è il principio su cui sono stati creati i VDC: permettere ai suoi utenti un'infrastruttura dinamica
+su cui basare le proprie ricerche e sviluppi.
+E' stato anche disposto un semplice test di funzionamento del cluster, che ha dimostrato la possibilità di eseguire applicazioni containerizzate e di esporle all'esterno.
+
+Sarà compito dei futuri sviluppatori e Data Scientists implementare i servizi che desiderano erogare dalla piattaforma, rendendo questo progetto più completo.
 Le conseguenze sono, per l'appunto, che il cluster non è adatto per un utilizzo di produzione e che non sono stati implementati test di sicurezza, resilienza o performance
 come menzionato nella \Cref{sec:test-concl}.
 D'altra parte lo scopo del progetto ed il contesto in cui si inserisce non necessita di ulteriore sviluppo e sarà oggetto di futuri lavori l'espansione del progetto.
