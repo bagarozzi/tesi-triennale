@@ -321,7 +321,8 @@ Ovviamente l'architettura del cluster cambia in base all'ambiente in cui viene d
 \end{figure}
 \section{Creazione del cluster}
 \label{sec:cluster-creation}
-La fase successiva è quella di integrazione dei nodi worker nel cluster. Questa operazione non è completamente automatizzabile in quanto utilizzando
+Dopo aver installato i pacchetti necessari e configurato i nodi, processo che può richiedere diversi minuti, si può procedere alla creazione del cluster vero e proprio,
+ciò consiste nell'integrazione dei nodi worker nel cluster. Questa operazione non è completamente automatizzabile in quanto utilizzando
 l'interfaccia grafica in congiunzione con \texttt{kubeadm} è necessario reperire un token di autenticazione che poi va inserito nei nodi worker.\\
 Questo token viene generato dal nodo master e non è conosciuto a priori.\\
 A questo punto si può procedere in diversi modi:
