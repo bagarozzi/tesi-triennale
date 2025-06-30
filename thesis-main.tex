@@ -298,7 +298,7 @@ Cloud-Init si occupa dell'installazione e configurazione preliminare dei nodi, i
 \begin{itemize}
     \item aggiunge le repository poi installa i pacchetti necessari per il funzionamento del cluster: \texttt{containerd}, \texttt{kubeadm}, \texttt{kubectl} e \texttt{kubelet}
     \item {l'impostazione di \texttt{Systemd} come cgroup manager per \texttt{containerd} e Kubernetes.
-        \lstinputlisting[language=bash,label={lst:systemd-cgroup}, firstline=36, lastline=36]{listings/master.yaml}
+        \lstinputlisting[language=bash,label={lst:systemd-cgroup}, firstline=37, lastline=37]{listings/master.yaml}
     }
     \item l'attivazione di \textit{ip forwading} per permettere ai nodi di scambiare pacchetti tra di loro: \verb|sudo sysctl net.ipv4.ip_forward=1|
     \item l'installazione del plugin CNI \textit{Calico} per la gestione della rete
