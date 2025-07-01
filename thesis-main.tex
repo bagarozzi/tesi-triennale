@@ -364,7 +364,7 @@ Tutti i nodi sono inseriti nella rete interna del VDC ed un gateway permette l'a
 Per verificare il corretto funzionamento del cluster viene eseguita una semplice applicazione web stateless utilizzando NginX come server web. Il deployment consiste in due applicazioni
 posizionate su più pod che servono due pagine web distinte, come per simulare l'erogazione di due servizi diversi.
 
-I pod vengono racchiusi in un servizio che espone il suo endpoint al cluster; infine una risorsa Ingress espone il servizio all'esterno del cluster,
+I pod vengono racchiusi in un servizio che espone il suo endpoint al cluster (Service di tipo ClusterIP); infine una risorsa Ingress espone il servizio all'esterno del cluster,
 con le modalità menzionate alla \Cref{sec:ingress}, instradando il traffico verso i servizi in base al percorso richiesto.
 \begin{figure}[!hbt]
     \centering
