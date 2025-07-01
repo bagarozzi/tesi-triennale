@@ -236,7 +236,8 @@ I principali componenti sono quindi:
     }
     \item {
         % TODO
-        Storage: la gestione dello storage a lungo e corto termine. Viene fatto per mezzo di diversi componenti come volumi, volumi persistenti o ConfigMaps.
+        Storage: La gestione dello storage persistente e temporaneo è affidata a diversi oggetti: i volumi, i PersistentVolume (PV) e le ConfigMap.
+        Kubernetes consente di montare volumi all'interno dei pod per conservare dati tra riavvii, oppure per configurare applicazioni in modo flessibile e centralizzato.
     }
 \end{itemize}
 \subsection{Container runtime e plugin CNI}
