@@ -455,8 +455,10 @@ Al fine di rendere il progetto più completo e pronto per un utilizzo in produzi
     }
 \end{itemize}
 Come menzionato alla \Cref{sec:cluster-creation}, un altro aspetto che può essere migliorato è l'automazione della creazione del cluster.
-Per ottenere il massimo livello automazione sarebbe preferibile disporre dello strumento in riga di comando di OpenStack, che se integrato con script, renderebbe 
+Per ottenere il massimo livello automazione sarebbe preferibile disporre dello strumento in riga di comando di OpenStack, che se integrato con linguaggi di scripting, renderebbe 
 più veloce sia il provisioning (sarebbe sufficiente un comando unico per creare tutte le macchine) sia l'integrazione dei nodi nel cluster tramite il recupero del token di accesso.
+Più in generale, dare l'accesso agli utenti al client OpenStack in riga di comando permetterebbe un maggiore controllo sul VDC da parte loro, ma questo richiede una configurazione
+per evitare inconvenienti e garantire l'integrità del VDC stesso.
 %Fornire l'accesso all'interfaccia in riga di comando a tutti gli utenti del VDC 
 
 %----------------------------------------------------------------------------------------
