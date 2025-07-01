@@ -138,10 +138,12 @@ Vediamo elencati ora alcuni dei principali componenti di OpenStack\cite{amslaure
     \item \textbf{Nova}: è il servizio che gestisce il \textit{provisioning} delle macchine virtuali e fisiche. 
     \item \textbf{Neutron}: gestisce tutti gli aspetti della rete, permettendo la comunicazione tra risorse e componenti di OpenStack. 
     \item \textbf{Cinder}: espone l'API per la gestione dello storage a blocchi, fornendo agli utenti ed alle macchine i volumi necessari.
-    \item \textbf{Glance}: mantiene le immagini e metadati che l'utente utilizza in altri servizi. 
+    \item \textbf{Glance}: mantiene le immagini per le istanze e metadati che l'utente utilizza in altri servizi. 
     \item \textbf{Keystone}: fornisce autenticazione per l'intera piattaforma. Gestisce utenti, ruoli, progetti e policy di accesso.
     \item \textbf{Horizon}: l'interfaccia web che permette agli utenti di interagire con OpenStack attraverso un browser. Fornisce un'interfaccia grafica per la gestione delle risorse.
 \end{itemize}
+L'infrastruttura virtualizzata viene divisa, tramite la creazione di più tenant e più gateway, in più VDC come in \Cref{fig:vdc}. Da qui gli utenti possono creare macchine virtuali, reti private, volumi ed
+accedere ad internet.
 \begin{figure}
     \centering
     \includegraphics[width=0.6\textwidth]{figures/vdc-diagram.png}
