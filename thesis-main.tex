@@ -260,7 +260,7 @@ In questo capitolo si affronterà l'implementazione effettiva del cluster a part
 per poi passare alla configurazione delle macchine tramite Cloud-Init. Infine verrà affrontata la creazione del cluster, esponendo diverse alternative per il \textit{join}
 di tutti i nodi.
 \section{Provisioning delle macchine}
-Le macchine virtuali vengono create tramite l'interfaccia grafica di OpenStack (Horizon), anche se possono essere create tramite interfaccia in linea di comando. Viene scelto di allocare diverse risorse ai nodi, precisamente: 
+Le macchine virtuali vengono create tramite l'interfaccia grafica di OpenStack (Horizon, v. \Cref{fig:kube-vm-provisioning}), anche se possono essere create tramite interfaccia in linea di comando. Viene scelto di allocare diverse risorse ai nodi, precisamente: 
 \begin{itemize}
     \item Al nodo master vengono allocate più risorse rispetto ai nodi worker perché questo deve eseguire diversi processi per il mantenimento del cluster
         come \texttt{kube-proxy} per la gestione della rete, \texttt{kube-scheduler} per l'assegnazione dei pod ai nodi, \texttt{kube-apiserver} per la API di Kubernetes etc.
@@ -282,7 +282,7 @@ di ciascun componente e le API verranno esposte al resto del cluster attraverso 
 \begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/kube-ha-topo.png}
-    \caption{Possibile architettura di un cluster Kubernetes ad alta disponibilità}
+    \caption{Possibile architettura di un cluster Kubernetes ad alta disponibilità\cite{kubernetes}}
     \label{fig:kube-ha-topo}
 \end{figure}
 %\
@@ -304,15 +304,6 @@ Cloud-Init si occupa dell'installazione e configurazione preliminare dei nodi, i
         \lstinputlisting[language=bash,label={lst:systemd-cgroup}, firstline=54, lastline=54]{listings/master.yaml}
     }
 \end{itemize}
-Un cluster composto da un nodo master e tre nodi worker sarà composto come in \Cref{fig:kube-cluster}. Tutti i nodi sono inseriti nella rete interna del VDC ed un gateway permette l'accesso
-dall'esterno del cluster sia per il controllo delle macchine sia per l'accesso ai servizi.\\
-Ovviamente l'architettura del cluster cambia in base all'ambiente in cui viene disposto.
-\begin{figure}[!hbt]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figures/kube-vdc.png}
-    \caption{Schema del cluster disposto su un VDC}
-    \label{fig:kube-cluster}
-\end{figure}
 \section{Creazione del cluster}
 \label{sec:cluster-creation}
 Dopo aver installato i pacchetti necessari e configurato i nodi, processo che può richiedere diversi minuti, si può procedere alla creazione del cluster vero e proprio,
@@ -355,6 +346,17 @@ Qui si possono scegliere due modalità di configurazione, anche in funzione dell
         In questo progetto è stata scelta questa modalità sia per motivi di semplicità nel testing sia perché il contesto non permette l'utilizzo di MetalLB.
     }
 \end{itemize}
+\subsection{Risultato}
+\FloatBarrier
+Dopo aver eseguito tutti i passaggi delle sezioni precedenti si ottiene un cluster disposto come in il \Cref{fig:kube-cluster}, il numero di nodi varia in base a quanti ne sono stati creati in fase di provisioning.
+Tutti i nodi sono inseriti nella rete interna del VDC ed un gateway permette l'accesso dall'esterno del cluster sia per il controllo delle macchine sia per l'accesso ai servizi.\\
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/kube-vdc.png}
+    \caption{Schema del cluster disposto su un VDC}
+    \label{fig:kube-cluster}
+\end{figure}
+\FloatBarrier
 \chapter{Testing}
 \section{Deployment di prova}
 \subsection{Architettura di test}
