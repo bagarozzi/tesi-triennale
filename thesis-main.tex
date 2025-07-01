@@ -323,7 +323,7 @@ Successivamente lo script si occuperà di leggere il file e di eseguire i comand
 
 L'alternativa più completa ed automatizzata per la creazione del cluster può essere quella di utilizzare l'interfaccia in linea di comando di OpenStack.
 Tramite questa si ha un controllo più granulare sulle operazioni, infatti Horizon non offre tutte le funzionalità disponibili tramite linea di comando.
-Integrando questo strumento con script opportunamente costruiti si può automatizzare completamente il processo.
+Integrando questo strumento con script (Bash, Python ecc.) opportunamente costruiti si può automatizzare completamente il processo.
 Questo aspetto viene affrontato anche negli sviluppi futuri del progetto alla \Cref{sec:future}.
 \subsection{Configurazione di un controller Ingress}
 \label{sec:ingress}
@@ -455,7 +455,7 @@ Al fine di rendere il progetto più completo e pronto per un utilizzo in produzi
     }
 \end{itemize}
 Come menzionato alla \Cref{sec:cluster-creation}, un altro aspetto che può essere migliorato è l'automazione della creazione del cluster.
-Per ottenere il massimo livello automazione sarebbe preferibile disporre dello strumento in riga di comando di OpenStack, che se integrato con script bash, renderebbe 
+Per ottenere il massimo livello automazione sarebbe preferibile disporre dello strumento in riga di comando di OpenStack, che se integrato con script, renderebbe 
 più veloce sia il provisioning (sarebbe sufficiente un comando unico per creare tutte le macchine) sia l'integrazione dei nodi nel cluster tramite il recupero del token di accesso.
 %Fornire l'accesso all'interfaccia in riga di comando a tutti gli utenti del VDC 
 
