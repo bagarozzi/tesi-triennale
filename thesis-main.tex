@@ -260,7 +260,7 @@ In questo capitolo si affronterà l'implementazione effettiva del cluster a part
 per poi passare alla configurazione delle macchine tramite Cloud-Init. Infine verrà affrontata la creazione del cluster, esponendo diverse alternative per il \textit{join}
 di tutti i nodi.
 \section{Provisioning delle macchine}
-Le macchine virtuali vengono create tramite l'interfaccia grafica di OpenStack (Horizon). Viene scelto di allocare diverse risorse ai nodi, precisamente: 
+Le macchine virtuali vengono create tramite l'interfaccia grafica di OpenStack (Horizon), anche se possono essere create tramite interfaccia in linea di comando. Viene scelto di allocare diverse risorse ai nodi, precisamente: 
 \begin{itemize}
     \item Al nodo master vengono allocate più risorse rispetto ai nodi worker perché questo deve eseguire diversi processi per il mantenimento del cluster
         come \texttt{kube-proxy} per la gestione della rete, \texttt{kube-scheduler} per l'assegnazione dei pod ai nodi, \texttt{kube-apiserver} per la API di Kubernetes etc.
