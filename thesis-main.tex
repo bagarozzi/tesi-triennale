@@ -31,13 +31,13 @@
 \frontmatter\frontispiece
 
 \begin{abstract}	
-Questo elaborato descrive un progetto di automazione del dispiegamento di un cluster Kubernetes su infrastruttura OpenStack, sviluppato nel contesto del progetto Nereide dell'Istituto Nazionale di Geofisica e Vulcanologia (INGV). L'obiettivo è semplificare l'installazione di ambienti computazionali complessi attraverso script Infrastructure-as-Code (IaC), per agevolare l'uso di Virtual Data Center (VDC) da parte di utenti non esperti.
+Questo elaborato descrive un progetto di automazione del dispiegamento di un cluster Kubernetes su infrastruttura OpenStack, sviluppato nel contesto del progetto Nereide dell'Istituto Nazionale di Geofisica e Vulcanologia (INGV). L'obiettivo è semplificare l'installazione di ambienti computazionali complessi attraverso script Infrastructure-as-Code (IaC), per agevolare l'uso di Virtual Data Center (VDC).
 
-Dopo un'analisi delle tecnologie utilizzate (OpenStack, Cloud-Init e Kubernetes), viene illustrata l'implementazione pratica: il provisioning delle macchine virtuali tramite interfaccia Horizon, l'installazione automatica dei pacchetti (tra cui containerd, kubeadm, Calico) e la configurazione del cluster. Particolare attenzione è data all'integrazione automatica dei nodi worker tramite script Bash e all'installazione dell'Ingress Controller Nginx in modalità NodePort, compatibile con le restrizioni del firewall del VDC.
+Dopo un'analisi delle tecnologie utilizzate (OpenStack, Kubernetes ed Infrastructure-as-Code), viene illustrata l'implementazione pratica: il provisioning delle macchine virtuali tramite interfaccia Horizon e la creazione del cluster.
+Ulteriore attenzione è data alle varie possibilità di automazione che si possono attuare: dall'automazione del provisioning a quella della creazione del cluster.
+Il funzionamento del cluster viene verificato con un deployment di prova basato su un server web Nginx, che espone due servizi web accessibili tramite routing Ingress.
 
-Il funzionamento del cluster è stato verificato con un deployment di prova basato su Nginx, che espone due servizi web accessibili tramite routing Ingress.
-
-Infine vengono proposti anche degli sviluppi futuri per il consolidamento del progetto, tra cui: l'integrazione di sistemi di monitoraggio (es. Prometheus, Grafana), la compatibilità con altri sistemi operativi, la ridondanza dei nodi master per aumentare la resilienza e l'adozione di buone pratiche per la manutenzione del cluster.
+Infine vengono proposti anche degli sviluppi futuri per il consolidamento del progetto, tra cui: l'integrazione di sistemi di monitoraggio, la ridondanza dei nodi master per aumentare la resilienza e l'adozione di buone pratiche per la manutenzione del cluster.
 \end{abstract}
 
 \begin{dedication} % this is optional
