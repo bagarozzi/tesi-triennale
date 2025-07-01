@@ -338,7 +338,7 @@ Qui si possono scegliere due modalità di configurazione, anche in funzione dell
     \item \textbf{Utilizzo di MetalLB}: una soluzione unicamente software che permette l'utilizzo di load balancer anche in ambienti che non ne implementano.
         È comunque necessario che il cluster possa essere esposto all'esterno tramite un indirizzo IP pubblico. MetalLB si occupa di assegnare ad ogni servizio un
         indirizzo IP ed utilizza un nodo come punto di ingresso per il traffico esterno, successivamente annuncia tramite ARP che un servizio è raggiungibile tramite 
-        quel nodo.\\
+        quel nodo\cite{metallb}.\\
         Questo metodo non è implementabile perché il cluster è protetto da firewall mentre MetalLB ha bisogno di essere esposto completamente alla rete.
     \item {\textbf{Esposizione tramite NodePort}: un metodo decisamente più semplice che consiste in impostare l'Ingress Controller in modalità NodePort.
         In questo modo il traffico esterno viene inviato ad una porta specifica di uno qualsiasi dei nodi del cluster, che poi lo inoltra al controller (che poi
