@@ -243,7 +243,7 @@ I principali componenti sono quindi:
 Come menzionate in precedenza Kubernetes lascia all'utente la scelta di diversi componenti tra cui quello per gestire i container e quello per la gestione della rete\cite{kubernetes}.
 Al fine di eseguire i container Kubernetes ha bisogno di un ambiente di esecuzione che implementi la \textit{Container Runtime Interface} (CRI).
 Questa interfaccia permette di astrarre il layer di esecuzione dei container e permette a Kubernetes di essere indipendente dal tipo di container runtime utilizzato. 
-Sarà quindi sufficiente che il container runtime implementi la CRI per essere utilizzato da Kubernetes, le più note implementazioni sono:
+Sarà quindi sufficiente che il container runtime implementi la CRI per essere utilizzato, le più note implementazioni sono:
 \begin{itemize}
     \item \textbf{Docker Engine}: utilizza internamente containerd e la sua installazione fornisce anche strumenti in linea di comando per la gestione dei container. 
         È necessario installare anche \texttt{cri-dockerd}, un adattatore che permette a Kubernetes e Docker di comunicare tramite la CRI.
