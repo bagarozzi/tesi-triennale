@@ -25,14 +25,22 @@
 
 \frontmatter\frontispiece
 
-\begin{abstract}	
-Questo elaborato descrive un progetto di automazione del dispiegamento di un cluster Kubernetes su infrastruttura OpenStack, sviluppato nel contesto del progetto Nereide dell'Istituto Nazionale di Geofisica e Vulcanologia (INGV). L'obiettivo è semplificare l'installazione di ambienti computazionali complessi attraverso script Infrastructure-as-Code (IaC), per agevolare l'uso di Virtual Data Center (VDC).
+\begin{abstract}
+% Introduzione al contesto e cosa è un VDC
+Nel contesto europeo della ricerca aperta, riproducibile e collaborativa promosso dall'European Open Science Cloud (EOSC), si inserisce il progetto NEREIDE, sviluppato dall'Istituto Nazionale di Geofisica e Vulcanologia (INGV), che offre ai Data Scientist una piattaforma cloud basata su Virtual Data Center (VDC).
+I VDC sono ambienti virtualizzati, sicuri e autonomi che semplificano la gestione di risorse computazionali e di storage per l'elaborazione e l'analisi dei dati.
 
-Dopo un'analisi delle tecnologie utilizzate (OpenStack, Kubernetes ed Infrastructure-as-Code), viene illustrata l'implementazione pratica: il provisioning delle macchine virtuali tramite interfaccia Horizon e la creazione del cluster.
-Ulteriore attenzione è data alle varie possibilità di automazione che si possono attuare: dall'automazione del provisioning a quella della creazione del cluster.
-Il funzionamento del cluster viene verificato con un deployment di prova basato su un server web Nginx, che espone due servizi web accessibili tramite routing Ingress.
+% Il progetto: analisi, implementazione e conclusione
+Questo elaborato descrive un progetto di automazione della creazione di un cluster Kubernetes su cloud OpenStack, con approccio Infrastructure-as-Code (IaC), finalizzato alla realizzazione di ambienti computazionali complessi.
+Dopo aver analizzato le tecnologie utilizzate (OpenStack, Kubernetes e Cloud-Init), viene illustrato il processo di automazione: dal provisioning delle macchine virtuali alla configurazione del cluster.
+Infine, il cluster viene validato con un deployment di prova basato su NginX.\\
+Il progetto dimostra la possibilità di costruire un'infrastruttura scalabile per la Data Science, riducendo il carico operativo e aumentando la standardizzazione.
 
-Infine vengono proposti anche degli sviluppi futuri per il consolidamento del progetto, tra cui: l'integrazione di sistemi di monitoraggio, la ridondanza dei nodi master per aumentare la resilienza e l'adozione di buone pratiche per la manutenzione del cluster.
+% Conclusioni su NEREIDE e su lavori futuri
+Questi obiettivi sono alla base dei laboratori didattici NEREIDE, dove studenti e tirocinanti sperimentano la configurazione di infrastrutture cloud reali utilizzando tecnologie moderne come Kubernetes, Slurm, JupyterHub, ERDDAP e ElasticSearch.
+Il progetto rappresenta così un punto di partenza per futuri sviluppi orientati a contesti ed applicazioni più complessi,
+con particolare attenzione all'introduzione nel cluster di sistemi di monitoraggio e logging, all'aumento della resilienza e all'adozione di pratiche di gestione e manutenzione continuativa.
+Tali evoluzioni mirano a consolidare l'efficacia del VDC come piattaforma abilitante per la ricerca scientifica avanzata e come strumento formativo per la nuova generazione di tecnologi.
 \end{abstract}
 
 \begin{dedication} % this is optional
